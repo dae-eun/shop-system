@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {},
   },
+  css: ["@/assets/scss/app.scss", "swiper/swiper-bundle.css"],
   plugins: [],
   modules: [
     "nuxt-quasar-ui",

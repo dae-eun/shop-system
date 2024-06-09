@@ -8,13 +8,11 @@ const proxy = httpProxy.createProxyServer({
 export default defineEventHandler((event) => {
   return new Promise((resolve) => {
     const options = {};
-    console.log(event)
     const origEnd = event.node.res.end;
     event.node.res.end = function () {
       resolve(null);
       return origEnd.call(event.node.res);
     }
-    console.log(event.node.req)
     proxy.web(event.node.req, event.node.res, options); // proxy.web() works asynchronously
   });
 });

@@ -1,0 +1,58 @@
+:root {
+  --q-primary: #3769e7; //협회 홈
+}
+
+/* color */
+$primary-color: #3769e7;
+$sub-color: #bdcbe5;
+$light-color: #f1f5fd;
+$white: #ffffff;
+$black: #000000;
+
+// font - 글자에만 사용
+$text-dark: #333333;
+$text-red: #ff0000;
+$text-grey1: #686868;
+$text-grey2: #8c8c8c;
+$text-grey3: #b9b9b9;
+
+// line - border에만 사용
+$line1: #dfdfdf;
+$line2: #f8f8f8;
+
+// background - 배경색에만 사용
+$bg-dark: #333333;
+$bg-grey: #f8f8f8;
+$bg-btn-grey: #686868;
+
+/* layout */
+$inner-width: 140rem;
+$full-width: 100%;
+
+/* font size */
+$fs-12: 1.2rem;
+$fs-14: 1.4rem;
+$fs-16: 1.6rem;
+$fs-18: 1.8rem;
+$fs-20: 2rem;
+$fs-22: 2.2rem;
+$fs-24: 2.4rem;
+$fs-30: 3rem;
+$fs-40: 4rem;
+$fs-48: 4.8rem;
+$fs-60: 6rem;
+
+/* mixin */
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
