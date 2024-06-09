@@ -33,7 +33,9 @@ app.use(cors());
 app.use(dbMiddleware);
 
 const menuRoutes = require("./routes/menuRoutes.js");
+const authRoutes = require("./routes/authRoutes.js");
 app.use("/api", menuRoutes);
+app.use("/api", authRoutes);
 
 app.get('/', (req, res) => {
   res.send('hi')
