@@ -1,6 +1,6 @@
 <script setup>
   const user = ref({
-    username: '',
+    email: '',
     password: '',
   });
   
@@ -15,10 +15,10 @@
       <q-card-section class="login-ipt">
         <div class="text-h6 text-center q-mb-md">로그인</div>
         <q-form @submit="login">
-          <q-input v-model="user.username" class="mT10" outlined label="아이디" autofocus />
+          <q-input v-model="user.email" class="mT10" outlined label="이메일" autofocus />
           <q-input v-model="user.password" class="mT10" outlined label="비밀번호" type="password" />
           <div class="btn-center">
-            <q-btn label="Login" type="submit" color="primary" />
+            <q-btn label="로그인" type="submit" color="primary" />
           </div>
         </q-form>
       </q-card-section>
