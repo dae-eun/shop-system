@@ -6,7 +6,7 @@ const lorem =
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
     <q-card class="my-card" flat bordered>
-      <q-img src="https://cdn.quasar.dev/img/parallax1.jpg" />
+      <q-img src="" />
 
       <q-card-section>
         <div class="text-overline text-orange-9">Overline</div>

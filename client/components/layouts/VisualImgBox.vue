@@ -15,7 +15,7 @@ for (let i = 0; i < maxSize; i++) {
       v-model:showSwiperCnt="showSwiperCnt"
     >
       <template #item>
-        <q-img class="q-layout" src="https://cdn.quasar.dev/img/image-1x.png" />
+        <q-img class="q-layout" src="" />
       </template>
     </Swiper-item>
   </div>
