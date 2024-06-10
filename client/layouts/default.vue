@@ -1,6 +1,6 @@
 <script setup>
-import HamburgerLogin from "~/components/layouts/HamburgerLogin";
-import HamburgerLogout from "~/components/layouts/HamburgerLogout";
+import HamburgerIsLogin from "~/components/layouts/HamburgerIsLogin";
+import HamburgerIsLogout from "~/components/layouts/HamburgerIsLogout";
 import HamburgerSubMenu from "~/components/layouts/HamburgerSubMenu";
 import { useAuthStore } from "~/stores/auth/loginStore";
 const rightDrawerOpen = ref(false);
@@ -31,8 +31,8 @@ const rightDrawerOpen = ref(false);
       behavior="mobile"
       elevated
     >
-      <HamburgerLogout v-if="!useAuthStore().isLogin"/>
-      <HamburgerLogin v-else/>
+      <HamburgerIsLogout v-if="!useAuthStore().isLogin"/>
+      <HamburgerIsLogin v-else/>
       <HamburgerSubMenu />
       <!-- drawer content -->
     </q-drawer>
