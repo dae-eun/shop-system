@@ -1,7 +1,10 @@
 // controllers
 const mysql = require('mysql2/promise');
 const dbconfig = require('../config.js');
-
+const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv");
+dotenv.config();
+const secretKey = process.env.SECRET_KEY
 // 데이터베이스 연결 설정
 const pool = mysql.createPool(dbconfig);
 
@@ -16,7 +19,8 @@ async function login(req, res) {
         );
 
         if (result.length > 0) {
-            res.json({ message: 'Login successful.', user: result[0] }); // 사용자 정보 반환
+            const token = jwt.sign({ userId: result[0].id }, secretKey, { expiresIn: '1h' });
+            res.json({ message: 'Login successful.', user: result[0], token }); // JWT 반환
         } else {
             res.status(401).json({ message: 'Invalid credentials.' });
         }
