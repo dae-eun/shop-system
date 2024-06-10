@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   css: ["@/assets/scss/app.scss", "swiper/swiper-bundle.css"],
   plugins: [],
   modules: [
+    '@pinia/nuxt',
     "nuxt-quasar-ui",
     "dayjs-nuxt",
     "@nuxt/eslint",
