@@ -1,7 +1,8 @@
 <script setup>
-import HamburgerSubMenu from "~/components/layouts/HamburgerSubMenu";
 import HamburgerLogin from "~/components/layouts/HamburgerLogin";
 import HamburgerLogout from "~/components/layouts/HamburgerLogout";
+import HamburgerSubMenu from "~/components/layouts/HamburgerSubMenu";
+import { useAuthStore } from "~/stores/auth/loginStore";
 const rightDrawerOpen = ref(false);
 </script>
 
@@ -30,8 +31,8 @@ const rightDrawerOpen = ref(false);
       behavior="mobile"
       elevated
     >
-      <HamburgerLogout />
-      <HamburgerLogin />
+      <HamburgerLogout v-if="!useAuthStore().token"/>
+      <HamburgerLogin v-else/>
       <HamburgerSubMenu />
       <!-- drawer content -->
     </q-drawer>
@@ -44,7 +45,7 @@ const rightDrawerOpen = ref(false);
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="" >
           </q-avatar>
           <div>Title</div>
         </q-toolbar-title>
