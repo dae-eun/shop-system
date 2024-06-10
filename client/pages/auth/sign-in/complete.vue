@@ -1,5 +1,5 @@
 <template>
-  <div>으캬캬캬</div>
+  <div>가입완료</div>
 </template>
 
 <script setup></script>
