@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     public: {},
   },
   css: ["@/assets/scss/app.scss", "swiper/swiper-bundle.css"],
-  plugins: ["~/plugins/eventBus.ts", "~/plugins/auth.ts"],
+  plugins: ["~/plugins/eventBus.ts"],
   modules: [
     '@pinia/nuxt',
     "nuxt-quasar-ui",

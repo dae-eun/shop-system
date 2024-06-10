@@ -1,18 +1,18 @@
-import httpProxy from 'http-proxy';
+export default defineEventHandler(event => {
+  if (!event.node.req.url?.startsWith("/api")) return;
 
-const proxy = httpProxy.createProxyServer({
-  target: 'http://localhost:4000/', // change to your backend api url
-  changeOrigin: true,
-});
+  const jwtToken = getCookie(event, 'token');
 
-export default defineEventHandler((event) => {
-  return new Promise((resolve) => {
-    const options = {};
-    const origEnd = event.node.res.end;
-    event.node.res.end = function () {
-      resolve(null);
-      return origEnd.call(event.node.res);
-    }
-    proxy.web(event.node.req, event.node.res, options); // proxy.web() works asynchronously
+  const target = new URL(event.node.req.url, "http://localhost:4000");
+
+  if (jwtToken) {
+    event.node.req.headers['Authorization'] = `Bearer ${jwtToken}`;
+  }
+
+  return proxyRequest(event, target.toString(), {
+      headers: {
+          host: target.host,
+          origin: target.origin,
+      },
   });
 });

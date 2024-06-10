@@ -23,7 +23,7 @@ const login = async () => {
   if(!checkVali()) return
   await useAuthStore().login(user.value);
   if(useAuthStore().status==='error') return $event("onAlertModal", { contentVal: '로그인에 실패했습니다.' });
-  navigateTo('/')
+  await navigateTo('/')
 };
 </script>
 <template>

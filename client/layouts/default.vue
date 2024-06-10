@@ -31,7 +31,7 @@ const rightDrawerOpen = ref(false);
       behavior="mobile"
       elevated
     >
-      <HamburgerLogout v-if="!useAuthStore().token"/>
+      <HamburgerLogout v-if="!useAuthStore().isLogin"/>
       <HamburgerLogin v-else/>
       <HamburgerSubMenu />
       <!-- drawer content -->
