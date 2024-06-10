@@ -529,17 +529,14 @@ a:hover {
   font-weight: 600;
 }
 
-.text-h4 {
-}
+.text-h4 {}
 
-.text-h5 {
-}
+.text-h5 {}
 
-.text-h6 {
-}
+.text-h6 {}
 
 /* quasar hover 스타일 초기화 */
-.q-hoverable:hover > .q-focus-helper {
+.q-hoverable:hover>.q-focus-helper {
   background: transparent !important;
   opacity: 0 !important;
 }
@@ -1223,7 +1220,7 @@ a:hover {
 
 /* q-card > div 에 radius default unset */
 .q-card {
-  > div {
+  >div {
     &:first-child {
       border-radius: 0;
     }
@@ -1233,7 +1230,7 @@ a:hover {
     }
   }
 
-  > img {
+  >img {
     &:first-child {
       border-radius: 0;
     }

@@ -1,7 +1,7 @@
 <script setup></script>
 <template>
   <div class="greeting-container">
-    <p class="greeting">안녕하세요.<br />대문 님</p>
+    <p class="greeting">안녕하세요.<br >대문 님</p>
     <ul class="menu-list">
       <li>
         <a href="#" class="cart"><q-icon size="18px" name="shop" /></a>
