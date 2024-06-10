@@ -19,7 +19,7 @@ async function login(req, res) {
         );
 
         if (result.length > 0) {
-            const token = jwt.sign({ userId: result[0].id }, secretKey, { expiresIn: '1h' });
+            const token = jwt.sign({ userId: result[0].userId }, secretKey, { expiresIn: '3h', algorithm: 'HS256' });
             res.json({ message: 'Login successful.', user: result[0], token }); // JWT 반환
         } else {
             res.status(401).json({ message: 'Invalid credentials.' });
@@ -27,6 +27,22 @@ async function login(req, res) {
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ message: 'Server error.' });
+    }
+}
+
+// 토큰 유효성 검사
+async function verifyToken(req, res) {
+    const token = req.body.token;
+    try {
+      const decoded = jwt.verify(token, secretKey); 
+      const [result] = await pool.execute(
+        `SELECT * FROM TB_USER WHERE userId =?`,
+        [decoded.userId]
+      );
+      res.json({ message: 'Token verified successfully.', user: result[0], token });
+    } catch (err) {
+      console.error('Login error:', error);
+      res.status(403).json({ message: 'Invalid or expired token.' });
     }
 }
 
@@ -51,4 +67,4 @@ async function signup(req, res) {
     }
 }
 
-module.exports = { login, signup }
+module.exports = { login, verifyToken, signup }
