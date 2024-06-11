@@ -47,7 +47,7 @@ export default createConfigForNuxt({
 
   .override('nuxt/javascript', {
     rules: {
-      'dot-notation': 'error',
+      'dot-notation': 'off',
       'no-console': ['warn', { allow: ['warn', 'error', 'debug'] }],
       'no-lonely-if': 'error', // No single if in an "else" block
       'no-useless-rename': 'error',
