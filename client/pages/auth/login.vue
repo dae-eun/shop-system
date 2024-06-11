@@ -1,31 +1,31 @@
 <script setup>
 import { useAuthStore } from '~/stores/auth/loginStore';
 
-const { $event } = useNuxtApp()
+const { $event } = useNuxtApp();
 
 const user = ref({
   email: '',
   password: '',
-})
+});
 
 const checkVali = () => {
   if (!user.value.email) {
-    $event('onAlertModal', { contentVal: '아이디를 입력해주세요.' })
-    return false
+    $event('onAlertModal', { contentVal: '아이디를 입력해주세요.' });
+    return false;
   }
   if (!user.value.password) {
-    $event('onAlertModal', { contentVal: '비밀번호를 입력해주세요.' })
-    return false
+    $event('onAlertModal', { contentVal: '비밀번호를 입력해주세요.' });
+    return false;
   }
-  return true
-}
+  return true;
+};
 
 const login = async () => {
-  if (!checkVali()) { return }
-  await useAuthStore().login(user.value)
-  if (useAuthStore().status === 'error') { return $event('onAlertModal', { contentVal: '로그인에 실패했습니다.' }) }
-  await navigateTo('/')
-}
+  if (!checkVali()) return;
+  await useAuthStore().login(user.value);
+  if (useAuthStore().status === 'error') return $event('onAlertModal', { contentVal: '로그인에 실패했습니다.' });
+  await navigateTo('/');
+};
 </script>
 
 <template>

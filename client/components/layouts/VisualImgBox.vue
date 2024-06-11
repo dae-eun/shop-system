@@ -1,5 +1,6 @@
 <script setup>
-import SwiperItem from "~/components/module/swiper/SwiperLoopList.vue";
+import SwiperItem from '~/components/module/swiper/SwiperLoopList.vue';
+
 const showSwiperCnt = ref(1);
 const swiperCard = ref([]);
 const maxSize = 6;
@@ -8,6 +9,7 @@ for (let i = 0; i < maxSize; i++) {
   swiperCard.value.push({ i });
 }
 </script>
+
 <template>
   <div>
     <Swiper-item
@@ -15,11 +17,15 @@ for (let i = 0; i < maxSize; i++) {
       v-model:showSwiperCnt="showSwiperCnt"
     >
       <template #item>
-        <q-img class="q-layout" src="" />
+        <q-img
+          class="q-layout"
+          src=""
+        />
       </template>
     </Swiper-item>
   </div>
 </template>
+
 <style scoped>
 .q-layout {
   height: calc(100vh - 50px);

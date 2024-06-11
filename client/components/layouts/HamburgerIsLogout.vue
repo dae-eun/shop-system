@@ -1,8 +1,19 @@
 <script setup></script>
+
 <template>
   <div class="button-container">
-    <nuxt-link to="/auth/login" class="login-button">로그인</nuxt-link>
-    <nuxt-link to="/auth/sign-in" class="signup-button">회원가입</nuxt-link>
+    <nuxt-link
+      to="/auth/login"
+      class="login-button"
+    >
+      로그인
+    </nuxt-link>
+    <nuxt-link
+      to="/auth/sign-in"
+      class="signup-button"
+    >
+      회원가입
+    </nuxt-link>
   </div>
 </template>
 

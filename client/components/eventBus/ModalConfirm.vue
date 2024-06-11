@@ -8,7 +8,7 @@ let cancelCallback = null;
 
 const { $listen } = useNuxtApp();
 onMounted(() => {
-  $listen("onConfirmModal", ({ contentVal, cancelVal, confirmVal, callbackFunc, cancelCallbackFunc }) => {
+  $listen('onConfirmModal', ({ contentVal, cancelVal, confirmVal, callbackFunc, cancelCallbackFunc }) => {
     visible.value = true;
     content = contentVal;
     cancel = cancelVal;
@@ -29,18 +29,33 @@ const confirmClose = (isCallback) => {
 </script>
 
 <template>
-    <div class="q-pa-md q-gutter-sm">  
-      <q-dialog v-model="visible" persistent>
-        <q-card>
-          <q-card-section class="row items-center">
-            <span class="q-ml-sm">{{ content }}</span>
-          </q-card-section>
-  
-          <q-card-actions align="right">
-            <q-btn v-close-popup flat :label="cancel" color="primary"  @click="confirmClose(false)" />
-            <q-btn v-close-popup flat :label="confirm" color="primary" @click="confirmClose(true)" />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-    </div>
-  </template>
+  <div class="q-pa-md q-gutter-sm">
+    <q-dialog
+      v-model="visible"
+      persistent
+    >
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">{{ content }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            v-close-popup
+            flat
+            :label="cancel"
+            color="primary"
+            @click="confirmClose(false)"
+          />
+          <q-btn
+            v-close-popup
+            flat
+            :label="confirm"
+            color="primary"
+            @click="confirmClose(true)"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+</template>

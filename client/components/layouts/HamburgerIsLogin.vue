@@ -1,18 +1,39 @@
 <script setup>
-import { useAuthStore } from "~/stores/auth/loginStore";
+import { useAuthStore } from '~/stores/auth/loginStore';
 </script>
+
 <template>
   <div class="greeting-container">
-    <p class="greeting">안녕하세요.<br >{{ useAuthStore().user.userName }} 님</p>
+    <p class="greeting">
+      안녕하세요.<br>{{ useAuthStore().user.userName }} 님
+    </p>
     <ul class="menu-list">
       <li>
-        <a href="#" class="cart"><q-icon size="18px" name="shop" /></a>
+        <a
+          href="#"
+          class="cart"
+        ><q-icon
+          size="18px"
+          name="shop"
+        /></a>
       </li>
       <li>
-        <a href="#" class="settings"><q-icon size="18px" name="settings" /></a>
+        <a
+          href="#"
+          class="settings"
+        ><q-icon
+          size="18px"
+          name="settings"
+        /></a>
       </li>
       <li>
-        <a class="logout" @click="useAuthStore().logout()"><q-icon size="18px" name="logout" /></a>
+        <a
+          class="logout"
+          @click="useAuthStore().logout()"
+        ><q-icon
+          size="18px"
+          name="logout"
+        /></a>
       </li>
     </ul>
   </div>

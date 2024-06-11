@@ -5,7 +5,7 @@ let callback = null;
 
 const { $listen } = useNuxtApp();
 onMounted(() => {
-  $listen("onAlertModal", ({ contentVal, callbackFunc }) => {
+  $listen('onAlertModal', ({ contentVal, callbackFunc }) => {
     visible.value = true;
     content = contentVal;
     if (callbackFunc) callback = callbackFunc;
@@ -18,6 +18,7 @@ const closeDialog = () => {
   callback = null;
 };
 </script>
+
 <template>
   <q-dialog v-model="visible">
     <q-card class="q-pa-md">
@@ -26,7 +27,13 @@ const closeDialog = () => {
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn v-close-popup flat label="OK" color="primary" @click="closeDialog" />
+        <q-btn
+          v-close-popup
+          flat
+          label="OK"
+          color="primary"
+          @click="closeDialog"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>

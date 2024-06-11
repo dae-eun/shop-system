@@ -1,15 +1,16 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Controller } from "swiper";
-import SwiperControls from "~/components/module/swiper/SwiperControls.vue";
-import "swiper/css";
+import { Autoplay, Controller } from 'swiper';
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import SwiperControls from '~/components/module/swiper/SwiperControls.vue';
+
 const modules = [Autoplay, Controller];
 const visualSwiper = ref(null);
 const isAutoplayPaused = ref(false);
-const swiperCard = defineModel("swiperCard", {
+const swiperCard = defineModel('swiperCard', {
   type: Array,
 });
-const showSwiperCnt = defineModel("showSwiperCnt", {
+const showSwiperCnt = defineModel('showSwiperCnt', {
   type: Number,
 });
 
@@ -32,6 +33,7 @@ const onMouseLeave = () => {
   }
 };
 </script>
+
 <template>
   <Swiper
     :slides-per-view="showSwiperCnt"
@@ -59,6 +61,7 @@ const onMouseLeave = () => {
     />
   </Swiper>
 </template>
+
 <style lang="scss" scoped>
 .parent-div-relative {
   position: relative;

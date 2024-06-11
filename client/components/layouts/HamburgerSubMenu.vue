@@ -1,8 +1,12 @@
 <script setup></script>
+
 <template>
   <div>
     <q-list bordered>
-      <q-expansion-item label="가나다" class="active">
+      <q-expansion-item
+        label="가나다"
+        class="active"
+      >
         <q-card>
           <q-card-section> 123 </q-card-section>
         </q-card>
