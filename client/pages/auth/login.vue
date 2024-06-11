@@ -1,36 +1,40 @@
 <script setup>
-import { useAuthStore } from "~/stores/auth/loginStore";
-const { $event } = useNuxtApp();
+import { useAuthStore } from '~/stores/auth/loginStore';
+
+const { $event } = useNuxtApp()
 
 const user = ref({
-  email: "",
-  password: "",
-});
+  email: '',
+  password: '',
+})
 
-const checkVali=()=>{
-  if(!user.value.email) {
-    $event("onAlertModal", { contentVal: "아이디를 입력해주세요." });
+const checkVali = () => {
+  if (!user.value.email) {
+    $event('onAlertModal', { contentVal: '아이디를 입력해주세요.' })
     return false
   }
-  if(!user.value.password) {
-    $event("onAlertModal", { contentVal: "비밀번호를 입력해주세요." });
+  if (!user.value.password) {
+    $event('onAlertModal', { contentVal: '비밀번호를 입력해주세요.' })
     return false
   }
   return true
 }
 
 const login = async () => {
-  if(!checkVali()) return
-  await useAuthStore().login(user.value);
-  if(useAuthStore().status==='error') return $event("onAlertModal", { contentVal: '로그인에 실패했습니다.' });
+  if (!checkVali()) { return }
+  await useAuthStore().login(user.value)
+  if (useAuthStore().status === 'error') { return $event('onAlertModal', { contentVal: '로그인에 실패했습니다.' }) }
   await navigateTo('/')
-};
+}
 </script>
+
 <template>
   <div class="flex mT60 justify-center items-center h-screen bg-gray-200">
     <q-card class="my-16 max-w-sm w-600">
       <q-card-section class="login-ipt">
-        <div class="text-h6 text-center q-mb-md">로그인</div>
+        <div class="text-h6 text-center q-mb-md">
+          로그인
+        </div>
         <q-form @submit="login">
           <q-input
             v-model="user.email"
@@ -47,7 +51,11 @@ const login = async () => {
             type="password"
           />
           <div class="btn-center">
-            <q-btn label="로그인" type="submit" color="primary" />
+            <q-btn
+              label="로그인"
+              type="submit"
+              color="primary"
+            />
           </div>
         </q-form>
       </q-card-section>

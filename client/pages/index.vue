@@ -1,7 +1,8 @@
 <script setup>
-import ProductList from "~/components/board/product/ProductList.vue";
-import VisualImgBox from "~/components/layouts/VisualImgBox.vue";
+import ProductList from '~/components/board/product/ProductList.vue';
+import VisualImgBox from '~/components/layouts/VisualImgBox.vue';
 </script>
+
 <template>
   <div>
     <div id="visual">
@@ -12,4 +13,5 @@ import VisualImgBox from "~/components/layouts/VisualImgBox.vue";
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped></style>

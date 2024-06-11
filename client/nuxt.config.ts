@@ -2,30 +2,30 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   devServer: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     port: 3000,
   },
   runtimeConfig: {
     public: {},
   },
-  css: ["@/assets/scss/app.scss", "swiper/swiper-bundle.css"],
-  plugins: ["~/plugins/eventBus.ts"],
+  css: ['@/assets/scss/app.scss', 'swiper/swiper-bundle.css'],
+  plugins: ['~/plugins/eventBus.ts'],
   modules: [
     '@pinia/nuxt',
-    "nuxt-quasar-ui",
-    "dayjs-nuxt",
-    "@nuxt/eslint",
-    "@nuxtjs/eslint-module",
+    'nuxt-quasar-ui',
+    'dayjs-nuxt',
+    '@nuxt/eslint',
+    '@nuxtjs/eslint-module',
   ],
   quasar: {
-    lang: "ko-KR",
+    lang: 'ko-KR',
     extras: {
-      fontIcons: ["material-icons"],
+      fontIcons: ['material-icons'],
     },
   },
   dayjs: {
-    locales: ["ko"],
-    plugins: ["relativeTime", "utc", "timezone"],
-    defaultLocale: "ko",
+    locales: ['ko'],
+    plugins: ['relativeTime', 'utc', 'timezone'],
+    defaultLocale: 'ko',
   },
 });
