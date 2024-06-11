@@ -18,13 +18,13 @@ import { useAuthStore } from '~/stores/auth/loginStore';
         /></a>
       </li>
       <li>
-        <a
-          href="#"
+        <nuxt-link
+          to="/cms"
           class="settings"
         ><q-icon
           size="18px"
           name="settings"
-        /></a>
+        /></nuxt-link>
       </li>
       <li>
         <a
