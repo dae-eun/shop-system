@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("login", {
   state: () => ({
     user: {},
     error: '',
-    isLogin: false,
+    status: '',
     token: '',
   }),
   actions: {
@@ -34,17 +34,18 @@ export const useAuthStore = defineStore("login", {
         this.user = response.user;
         this.token = response.token;
         useCookie("token").value = response.token;
-        this.isLogin = true
+        this.status = 'success'
 
       } catch (error) {
         const err = error as SystemError;
+        this.status = 'error'
         this.error = err.message;
       }
     },
     logout() {
       this.user = {};
       useCookie("token").value = null;
-      this.isLogin = false
+      this.status = ''
     },
     async checkAuth() {
       const token = useCookie("token").value;
@@ -58,7 +59,7 @@ export const useAuthStore = defineStore("login", {
 
           this.user = response.user;
           this.token = response.token;
-          this.isLogin = true
+          this.status = 'success'
 
         } catch (error) {
           console.log(error);
