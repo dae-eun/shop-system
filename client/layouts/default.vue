@@ -1,8 +1,9 @@
 <script setup>
-import HamburgerIsLogin from "~/components/layouts/HamburgerIsLogin";
-import HamburgerIsLogout from "~/components/layouts/HamburgerIsLogout";
-import HamburgerSubMenu from "~/components/layouts/HamburgerSubMenu";
-import { useAuthStore } from "~/stores/auth/loginStore";
+import HamburgerIsLogin from '~/components/layouts/HamburgerIsLogin';
+import HamburgerIsLogout from '~/components/layouts/HamburgerIsLogout';
+import HamburgerSubMenu from '~/components/layouts/HamburgerSubMenu';
+import { useAuthStore } from '~/stores/auth/loginStore';
+
 const rightDrawerOpen = ref(false);
 </script>
 
@@ -11,7 +12,12 @@ const rightDrawerOpen = ref(false);
     <q-header class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title class="text-center">
-          <nuxt-link clickable to="/"> Platform Name </nuxt-link>
+          <nuxt-link
+            clickable
+            to="/"
+          >
+            Platform Name
+          </nuxt-link>
         </q-toolbar-title>
 
         <q-btn
@@ -31,8 +37,8 @@ const rightDrawerOpen = ref(false);
       behavior="mobile"
       elevated
     >
-      <HamburgerIsLogout v-if="!useAuthStore().isLogin"/>
-      <HamburgerIsLogin v-else/>
+      <HamburgerIsLogout v-if="!useAuthStore().isLogin" />
+      <HamburgerIsLogin v-else />
       <HamburgerSubMenu />
       <!-- drawer content -->
     </q-drawer>
@@ -41,11 +47,14 @@ const rightDrawerOpen = ref(false);
       <slot />
     </q-page-container>
 
-    <q-footer bordered class="bg-grey-8 text-white">
+    <q-footer
+      bordered
+      class="bg-grey-8 text-white"
+    >
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="" >
+            <img src="">
           </q-avatar>
           <div>Title</div>
         </q-toolbar-title>
