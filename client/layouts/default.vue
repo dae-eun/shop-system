@@ -2,9 +2,18 @@
 import HamburgerIsLogin from '~/components/layouts/HamburgerIsLogin';
 import HamburgerIsLogout from '~/components/layouts/HamburgerIsLogout';
 import HamburgerSubMenu from '~/components/layouts/HamburgerSubMenu';
-import { useAuthStore } from '~/stores/auth/loginStore';
+import { getUserInfoStore } from '~/stores/auth/loginStore';
 
+const route = useRoute();
 const rightDrawerOpen = ref(false);
+const isLoaded = ref(false);
+const isCms = ref(false);
+onMounted(() => {
+  if (getUserInfoStore().isMiddlewareLoaded) {
+    isLoaded.value = true;
+    if (route.path.includes('/cms')) isCms.value = true;
+  }
+});
 </script>
 
 <template>
@@ -28,6 +37,27 @@ const rightDrawerOpen = ref(false);
           @click="rightDrawerOpen = !rightDrawerOpen"
         />
       </q-toolbar>
+      <q-tabs
+        v-if="route.path.includes('/cms')"
+        align="left"
+      >
+        <q-route-tab
+          to="/cms"
+          label="home"
+        />
+        <q-route-tab
+          to="/cms/menu"
+          label="menu"
+        />
+        <q-route-tab
+          to="/cms/board"
+          label="board"
+        />
+        <q-route-tab
+          to="/cms/order"
+          label="order"
+        />
+      </q-tabs>
     </q-header>
 
     <q-drawer
@@ -37,13 +67,15 @@ const rightDrawerOpen = ref(false);
       behavior="mobile"
       elevated
     >
-      <HamburgerIsLogout v-if="!useAuthStore().isLogin" />
-      <HamburgerIsLogin v-else />
-      <HamburgerSubMenu />
+      <template v-if="isLoaded">
+        <HamburgerIsLogout v-if="!getUserInfoStore().isLogin" />
+        <HamburgerIsLogin v-else />
+        <HamburgerSubMenu />
+      </template>
       <!-- drawer content -->
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container :class="isCms?'inner':''">
       <slot />
     </q-page-container>
 
@@ -62,3 +94,10 @@ const rightDrawerOpen = ref(false);
     </q-footer>
   </q-layout>
 </template>
+
+<style lang="scss" scoped>
+  .inner {
+    width: 1024px;
+    margin: 0 auto;
+  }
+</style>

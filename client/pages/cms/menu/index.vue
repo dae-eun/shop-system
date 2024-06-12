@@ -72,10 +72,6 @@ const props = [
   },
 
 ];
-
-definePageMeta({
-  layout: 'cms',
-});
 </script>
 
 <template>

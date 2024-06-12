@@ -3,7 +3,6 @@ import { defineStore } from 'pinia';
 interface User {
   userName: string
   email: string
-  password: string
   phoneNumber: string
   postNum: string
   addr1: string
@@ -13,17 +12,17 @@ interface SystemError {
   code: string
   message: string
 }
-export const useAuthStore = defineStore('signup', {
+export const useSignupStore = defineStore('signup', {
   state: () => ({
-    user: {},
-    status: '',
+    userInfo: {},
+    statusCode: null,
+    message: '',
     error: '',
   }),
   actions: {
     async signup(userInfo: User) {
-      this.status = 'loading';
       try {
-        const response = await fetch('/api/auth/signup', {
+        const { statusCode, message, userInfo: resUserInfo } = await $fetch('/api/auth/signUp', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -31,15 +30,13 @@ export const useAuthStore = defineStore('signup', {
           body: JSON.stringify(userInfo),
         });
 
-        if (!response.ok) throw new Error(response.statusText);
-
-        const data = await response.json();
-        this.user = data.user;
-        this.status = 'success';
+        this.statusCode = statusCode;
+        this.message = message;
+        if (statusCode === 201) this.userInfo = resUserInfo;
+        return this.$state;
       } catch (error) {
         const err = error as SystemError;
         this.error = err.message;
-        this.status = 'error';
       }
     },
   },

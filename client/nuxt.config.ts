@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     'dayjs-nuxt',
     '@nuxt/eslint',
     '@nuxtjs/eslint-module',
+    '@nuxtjs/supabase',
   ],
   quasar: {
     lang: 'ko-KR',
@@ -27,5 +28,16 @@ export default defineNuxtConfig({
     locales: ['ko'],
     plugins: ['relativeTime', 'utc', 'timezone'],
     defaultLocale: 'ko',
+  },
+  supabase: {
+    // Options
+    redirect: true,
+    redirectOptions: {
+      login: '/auth/login',
+      callback: '/',
+      include: ['/cms(/*)?'],
+      exclude: [],
+      cookieRedirect: false,
+    },
   },
 });

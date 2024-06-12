@@ -8,12 +8,12 @@
     >
       로그인
     </nuxt-link>
-    <nuxt-link
-      to="/auth/sign-in"
+    <!-- <nuxt-link
+      to="/auth/sign-up"
       class="signup-button"
     >
       회원가입
-    </nuxt-link>
+    </nuxt-link> -->
   </div>
 </template>
 

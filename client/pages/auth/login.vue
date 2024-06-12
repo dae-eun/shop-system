@@ -1,31 +1,23 @@
 <script setup>
-import { useAuthStore } from '~/stores/auth/loginStore';
+const supabase = useSupabaseClient();
 
-const { $event } = useNuxtApp();
-
-const user = ref({
-  email: '',
-  password: '',
-});
-
-const checkVali = () => {
-  if (!user.value.email) {
-    $event('onAlertModal', { contentVal: '아이디를 입력해주세요.' });
-    return false;
-  }
-  if (!user.value.password) {
-    $event('onAlertModal', { contentVal: '비밀번호를 입력해주세요.' });
-    return false;
-  }
-  return true;
+const signInWithOAuth = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: 'http://localhost:3000/auth/userCheck',
+    },
+  });
+  if (error) $event('onAlertModal', { contentVal: error });
 };
-
-const login = async () => {
-  if (!checkVali()) return;
-  await useAuthStore().login(user.value);
-  if (useAuthStore().status === 'error') return $event('onAlertModal', { contentVal: '로그인에 실패했습니다.' });
-  await navigateTo('/');
-};
+// watchEffect(() => {
+//   // Can be uncommented in next nuxt version when https://github.com/nuxt/nuxt/issues/21841 is fixed
+//   if (user.value) {
+//     console.log(user);
+//     // console.log('navigate to / !');
+//     return navigateTo('/');
+//   }
+// });
 </script>
 
 <template>
@@ -35,29 +27,11 @@ const login = async () => {
         <div class="text-h6 text-center q-mb-md">
           로그인
         </div>
-        <q-form @submit="login">
-          <q-input
-            v-model="user.email"
-            class="mT10"
-            outlined
-            label="이메일"
-            autofocus
-          />
-          <q-input
-            v-model="user.password"
-            class="mT10"
-            outlined
-            label="비밀번호"
-            type="password"
-          />
-          <div class="btn-center">
-            <q-btn
-              label="로그인"
-              type="submit"
-              color="primary"
-            />
-          </div>
-        </q-form>
+        <q-btn
+          class="bg-primary text-white"
+          label="GitHube 로그인"
+          @click="signInWithOAuth"
+        />
       </q-card-section>
     </q-card>
   </div>

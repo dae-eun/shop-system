@@ -3,71 +3,55 @@ import { defineStore } from 'pinia';
 interface User {
   userName: string
   email: string
-  password: string
   phoneNumber: string
   postNum: string
   addr1: string
   addr2: string
 }
+interface UserCheckResponse {
+  statusCode: number
+  message: string
+  userInfo?: User
+}
+
 interface SystemError {
   code: string
   message: string
 }
-export const useAuthStore = defineStore('login', {
+export const getUserInfoStore = defineStore('getUserInfo', {
   state: () => ({
-    user: {},
+    userInfo: null as User | null,
+    statusCode: null as Number | null,
+    message: '',
     error: '',
-    status: '',
     isLogin: false,
-    token: '',
+    isMiddlewareLoaded: false,
   }),
   actions: {
-    async login(userInfo: User) {
+    async getUserInfo() {
       try {
-        const response = await $fetch('/api/auth/login', {
+        const { statusCode, message, userInfo } = await $fetch('/api/auth/getUserInfo', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userInfo),
-        }) as Response;
+        }) as UserCheckResponse;
 
-        this.user = response.user;
-        this.token = response.token;
-        useCookie('token').value = response.token;
-        this.isLogin = true;
-        this.status = 'success';
+        this.statusCode = statusCode;
+        this.message = message;
+        if (statusCode === 200) {
+          this.userInfo = userInfo || null;
+          this.isLogin = true;
+        }
+        return this.$state;
       } catch (error) {
         const err = error as SystemError;
-        this.status = 'error';
         this.error = err.message;
       }
     },
     logout() {
-      this.user = {};
-      useCookie('token').value = null;
+      this.userInfo = null;
+      this.statusCode = null;
+      this.message = '';
+      this.error = '';
       this.isLogin = false;
-      this.status = '';
-    },
-    async checkAuth() {
-      const token = useCookie('token').value;
-      if (token) {
-        try {
-          console.debug('token: ' + token);
-          const response = await $fetch('/api/auth/verifyToken', {
-            method: 'POST',
-            body: JSON.stringify({ token }),
-          }) as Response;
-
-          this.user = response.user;
-          this.token = response.token;
-          this.isLogin = true;
-          this.status = 'success';
-        } catch (error) {
-          console.debug(error);
-          this.logout();
-        }
-      }
     },
   },
 });

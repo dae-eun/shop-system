@@ -1,11 +1,19 @@
 <script setup>
-import { useAuthStore } from '~/stores/auth/loginStore';
+import { getUserInfoStore } from '~/stores/auth/loginStore';
+
+const supabase = useSupabaseClient();
+
+const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) return;
+  await getUserInfoStore().logout();
+};
 </script>
 
 <template>
   <div class="greeting-container">
     <p class="greeting">
-      안녕하세요.<br>{{ useAuthStore().user.userName }} 님
+      안녕하세요.<br>{{ getUserInfoStore().userInfo.userName }} 님
     </p>
     <ul class="menu-list">
       <li>
@@ -29,7 +37,7 @@ import { useAuthStore } from '~/stores/auth/loginStore';
       <li>
         <a
           class="logout"
-          @click="useAuthStore().logout()"
+          @click="signOut"
         ><q-icon
           size="18px"
           name="logout"
