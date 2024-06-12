@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      CLIENT_BASE_URL: process.env.CLIENT_BASE_URL,
+      baseUrl: process.env.BASE_URL,
     },
   },
   css: ['@/assets/scss/app.scss', 'swiper/swiper-bundle.css'],
@@ -35,6 +35,13 @@ export default defineNuxtConfig({
     // Options
     url: process.env.SUPABASE_URL,
     serviceKey: process.env.SUPABASE_SERVICE_KEY,
-    redirect: false,
+    redirect: true,
+    redirectOptions: {
+      login: '/auth/login',
+      callback: '/auth/userCheck',
+      include: ['/cms(/*)?'],
+      exclude: [],
+      cookieRedirect: false,
+    },
   },
 });

@@ -1,16 +1,16 @@
 <script setup>
 const supabase = useSupabaseClient();
-const { CLIENT_BASE_URL } = useRuntimeConfig().public;
+// const user = useSupabaseUser();
+const { baseUrl } = useRuntimeConfig().public;
 const signInWithOAuth = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${CLIENT_BASE_URL}/auth/userCheck`,
+      redirectTo: `${baseUrl}/auth/userCheck`,
     },
   });
   if (error) $event('onAlertModal', { contentVal: error });
 };
-console.log(CLIENT_BASE_URL);
 // watchEffect(() => {
 //   // Can be uncommented in next nuxt version when https://github.com/nuxt/nuxt/issues/21841 is fixed
 //   if (user.value) {
