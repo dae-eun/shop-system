@@ -139,12 +139,21 @@ const menu_non_rules = () => {
             </p>
             <q-btn
               class="btn-border mL10"
+              color="white"
+              :text-color="Object?.keys(regSeq)?.length < 1 ?'black':'primary'"
               :disable="Object?.keys(regSeq)?.length < 1"
-              square
               flat
               @click="emit('save-data')"
             >
               저장
+            </q-btn>
+            <q-btn
+              class="btn-border mL10"
+              color="deep-orange"
+              flat
+              @click="emit('delete-data')"
+            >
+              메뉴 삭제
             </q-btn>
           </q-card-section>
           <q-card-section class="row q-mt-lg">
