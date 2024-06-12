@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     // Options
     url: process.env.SUPABASE_URL,
     serviceKey: process.env.SUPABASE_SERVICE_KEY,
-    redirect: true,
+    redirect: false,
     redirectOptions: {
       login: '/auth/login',
       callback: `${process.env.CLIENT_BASE_URL}/auth/userCheck`,
