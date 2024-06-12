@@ -33,10 +33,12 @@ export default defineNuxtConfig({
   },
   supabase: {
     // Options
+    url: process.env.SUPABASE_URL,
+    serviceKey: process.env.SUPABASE_SERVICE_KEY,
     redirect: true,
     redirectOptions: {
       login: '/auth/login',
-      callback: '/',
+      callback: `${process.env.CLIENT_BASE_URL}/auth/userCheck`,
       include: ['/cms(/*)?'],
       exclude: [],
       cookieRedirect: false,

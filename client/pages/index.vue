@@ -2,6 +2,8 @@
 import ProductList from '~/components/board/product/ProductList.vue';
 import VisualImgBox from '~/components/layouts/VisualImgBox.vue';
 
+const supabase = useSupabaseClient();
+
 const callApi = async () => {
   const { data } = await $fetch('/api/hello', {
     method: 'POST',
@@ -10,6 +12,17 @@ const callApi = async () => {
 
   console.log(data);
 };
+
+onMounted(async () => {
+  console.log(supabase);
+  const { data: dbData, error: dbError } = await supabase.from('information_schema.tables').select('*').limit(1);
+
+  if (dbError) {
+    error.value = dbError.message;
+  } else {
+    data.value = dbData;
+  }
+});
 </script>
 
 <template>
