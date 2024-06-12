@@ -7,11 +7,9 @@ import { getUserInfoStore } from '~/stores/auth/loginStore';
 const route = useRoute();
 const rightDrawerOpen = ref(false);
 const isLoaded = ref(false);
-const isCms = ref(false);
 onMounted(() => {
   if (getUserInfoStore().isMiddlewareLoaded) {
     isLoaded.value = true;
-    if (route.path.includes('/cms')) isCms.value = true;
   }
 });
 </script>
@@ -75,7 +73,7 @@ onMounted(() => {
       <!-- drawer content -->
     </q-drawer>
 
-    <q-page-container :class="isCms?'inner':''">
+    <q-page-container :class="route.path.includes('/cms')?'inner':''">
       <slot />
     </q-page-container>
 
