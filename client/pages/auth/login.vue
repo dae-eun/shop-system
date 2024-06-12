@@ -10,6 +10,7 @@ const signInWithOAuth = async () => {
   });
   if (error) $event('onAlertModal', { contentVal: error });
 };
+console.log(CLIENT_BASE_URL);
 // watchEffect(() => {
 //   // Can be uncommented in next nuxt version when https://github.com/nuxt/nuxt/issues/21841 is fixed
 //   if (user.value) {
