@@ -1,11 +1,11 @@
 <script setup>
 const supabase = useSupabaseClient();
-
+const { CLIENT_BASE_URL } = useRuntimeConfig().public;
 const signInWithOAuth = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: 'http://localhost:3000/auth/userCheck',
+      redirectTo: `${CLIENT_BASE_URL}/auth/userCheck`,
     },
   });
   if (error) $event('onAlertModal', { contentVal: error });
