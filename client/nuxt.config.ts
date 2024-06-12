@@ -6,7 +6,9 @@ export default defineNuxtConfig({
     port: 3000,
   },
   runtimeConfig: {
-    public: {},
+    public: {
+      CLIENT_BASE_URL: process.env.CLIENT_BASE_URL,
+    },
   },
   css: ['@/assets/scss/app.scss', 'swiper/swiper-bundle.css'],
   plugins: ['~/plugins/eventBus.ts'],
