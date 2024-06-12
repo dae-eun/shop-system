@@ -35,6 +35,6 @@ export default defineNuxtConfig({
     // Options
     url: process.env.SUPABASE_URL,
     serviceKey: process.env.SUPABASE_SERVICE_KEY,
-
+    redirect: false,
   },
 });
