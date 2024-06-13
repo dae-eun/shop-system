@@ -1,6 +1,5 @@
 <script setup>
 const supabase = useSupabaseClient();
-// const user = useSupabaseUser();
 const { baseUrl } = useRuntimeConfig().public;
 const signInWithOAuth = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
@@ -11,15 +10,6 @@ const signInWithOAuth = async () => {
   });
   if (error) $event('onAlertModal', { contentVal: error });
 };
-
-// watchEffect(() => {
-//   // Can be uncommented in next nuxt version when https://github.com/nuxt/nuxt/issues/21841 is fixed
-//   if (user.value) {
-//     console.log(user);
-//     // console.log('navigate to / !');
-//     return navigateTo('/');
-//   }
-// });
 </script>
 
 <template>
