@@ -1,5 +1,5 @@
 <script setup>
-import { addressSearch } from '@/composables/utils/addressSearch.js';
+import { addressSearch } from '~/composables/utils/addressSearch.js';
 import { useSignupStore } from '~/stores/auth/signupStore';
 
 const { showAlertModal } = useModal();

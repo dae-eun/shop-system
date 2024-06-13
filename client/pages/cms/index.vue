@@ -1,94 +1,96 @@
 <script setup>
-const splitterModel = ref(40);
-const selected = ref(false);
+// const splitterModel = ref(40);
+// const selected = ref(false);
 
-const props = [
-  {
-    label: 'Satisfied customers',
-    avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-    children: [
-      {
-        label: 'Good food',
-        icon: 'restaurant_menu',
-        children: [
-          { label: 'Quality ingredients' },
-          { label: 'Good recipe' },
-        ],
-      },
-      {
-        label: 'Good service',
-        icon: 'room_service',
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-      {
-        label: 'Pleasant surroundings',
-        icon: 'photo',
-        children: [
-          {
-            label: 'Happy atmosphere',
-          },
-          {
-            label: 'Good table presentation',
-          },
-          {
-            label: 'Pleasing decor',
-          },
-        ],
-      },
-      {
-        label: 'Pleasant surroundings',
-        icon: 'photo',
-        children: [
-          {
-            label: 'Happy atmosphere',
-          },
-          {
-            label: 'Good table presentation',
-          },
-          {
-            label: 'Pleasing decor',
-          },
-        ],
-      },
-      {
-        label: 'Pleasant surroundings',
-        icon: 'photo',
-        children: [
-          {
-            label: 'Happy atmosphere',
-          },
-          {
-            label: 'Good table presentation',
-          },
-          {
-            label: 'Pleasing decor',
-          },
-        ],
-      },
-    ],
-  },
-];
+// const props = [
+//   {
+//     label: 'Satisfied customers',
+//     avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
+//     children: [
+//       {
+//         label: 'Good food',
+//         icon: 'restaurant_menu',
+//         children: [
+//           { label: 'Quality ingredients' },
+//           { label: 'Good recipe' },
+//         ],
+//       },
+//       {
+//         label: 'Good service',
+//         icon: 'room_service',
+//         children: [
+//           { label: 'Prompt attention' },
+//           { label: 'Professional waiter' },
+//         ],
+//       },
+//       {
+//         label: 'Pleasant surroundings',
+//         icon: 'photo',
+//         children: [
+//           {
+//             label: 'Happy atmosphere',
+//           },
+//           {
+//             label: 'Good table presentation',
+//           },
+//           {
+//             label: 'Pleasing decor',
+//           },
+//         ],
+//       },
+//       {
+//         label: 'Pleasant surroundings',
+//         icon: 'photo',
+//         children: [
+//           {
+//             label: 'Happy atmosphere',
+//           },
+//           {
+//             label: 'Good table presentation',
+//           },
+//           {
+//             label: 'Pleasing decor',
+//           },
+//         ],
+//       },
+//       {
+//         label: 'Pleasant surroundings',
+//         icon: 'photo',
+//         children: [
+//           {
+//             label: 'Happy atmosphere',
+//           },
+//           {
+//             label: 'Good table presentation',
+//           },
+//           {
+//             label: 'Pleasing decor',
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ];
 
-const regSeq = ref({});
-const menu_rules = (v) => {
-  if (!v) return '필수 값 입니다.';
-  return true;
-};
-const menu_non_rules = () => {
-  return true;
-};
+// const regSeq = ref({});
+// const menu_rules = (v) => {
+//   if (!v) return '필수 값 입니다.';
+//   return true;
+// };
+// const menu_non_rules = () => {
+//   return true;
+// };
 </script>
 
 <template>
-  <div>
+  <div>준비중...</div>
+  <!-- <div>
     <q-splitter
       v-model="splitterModel"
     >
       <template #before>
         <q-card-section class="mT20">
+          <slot name="menuController" />
           <q-btn
             class="btn-black"
             :disable="(!targetDeps && targetDeps !== 0) || targetDeps > 3"
@@ -198,7 +200,6 @@ const menu_non_rules = () => {
                 label="정렬순서"
               />
               <div class="flex justify-between mT10 ">
-                <!-- Wrap 메뉴타입 section in a div tag -->
                 <div class="q-mr-md flex ">
                   <div class="self-center text-weight-bold">
                     메뉴타입
@@ -214,7 +215,6 @@ const menu_non_rules = () => {
                     />
                   </div>
                 </div>
-                <!-- Wrap 정렬순서 section in a div tag -->
                 <div class="q-mr-md flex ">
                   <div class="self-center text-weight-bold">
                     정렬순서
@@ -238,7 +238,7 @@ const menu_non_rules = () => {
         </q-card>
       </template>
     </q-splitter>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>

@@ -44,11 +44,11 @@ onMounted(() => {
           label="home"
         />
         <q-route-tab
-          to="/cms/menu"
+          to="/cms/contentManage/menu"
           label="menu"
         />
         <q-route-tab
-          to="/cms/board"
+          to="/cms/contentManage/board"
           label="board"
         />
         <q-route-tab

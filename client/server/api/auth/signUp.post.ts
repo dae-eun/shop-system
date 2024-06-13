@@ -41,7 +41,6 @@ export default eventHandler(async (event) => {
       console.error('Error during user registration:', error);
       return { statusCode: 500, message: 'Internal Server Error' };
     } else {
-      console.error('Error registration:', error);
       return { statusCode: 201, message: '가입되었습니다.', userInfo: data[0] };
     }
   } else {
