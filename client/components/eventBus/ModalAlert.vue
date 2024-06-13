@@ -22,7 +22,10 @@ const closeDialog = () => {
 <template>
   <q-dialog v-model="visible">
     <q-card class="q-pa-md">
-      <q-card-section class="q-pt-none">
+      <q-card-section
+        class="q-pt-none"
+        style="min-width: 300px;"
+      >
         {{ content }}
       </q-card-section>
 

@@ -35,7 +35,10 @@ const confirmClose = (isCallback) => {
       persistent
     >
       <q-card>
-        <q-card-section class="row items-center">
+        <q-card-section
+          class="row items-center"
+          style="min-width: 300px;"
+        >
           <span class="q-ml-sm">{{ content }}</span>
         </q-card-section>
 
@@ -43,16 +46,16 @@ const confirmClose = (isCallback) => {
           <q-btn
             v-close-popup
             flat
-            :label="cancel"
+            :label="confirm"
             color="primary"
-            @click="confirmClose(false)"
+            @click="confirmClose(true)"
           />
           <q-btn
             v-close-popup
             flat
-            :label="confirm"
+            :label="cancel"
             color="primary"
-            @click="confirmClose(true)"
+            @click="confirmClose(false)"
           />
         </q-card-actions>
       </q-card>

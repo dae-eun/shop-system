@@ -11,8 +11,8 @@ export const useModal = () => {
   const showConfirmModal = (msg: string, func?: () => void) => {
     $event('onConfirmModal', {
       contentVal: msg,
-      cancelVal: '취소',
       confirmVal: '확인',
+      cancelVal: '취소',
       callbackFunc: func,
     });
   };
