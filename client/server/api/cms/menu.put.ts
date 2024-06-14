@@ -9,6 +9,7 @@ interface MenuData {
   menuType: String
   pageType: String | null
   sortOrdr: String
+  boardType: String
   useAt: Boolean
 };
 
@@ -46,6 +47,7 @@ export default defineEventHandler(async (event) => {
     menuType: body.menuType || currentData.data?.menuType, // menuType 필드 업데이트
     pageType: body.pageType, // pageType 필드 업데이트
     sortOrdr: body.sortOrdr || currentData.data?.sortOrdr, // sortOrdr 필드 업데이트
+    boardType: body.boardType,
     useAt: body.useAt || currentData.data?.useAt, // useAt 필드 업데이트
   };
 

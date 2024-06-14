@@ -20,8 +20,11 @@ const closeDialog = () => {
 </script>
 
 <template>
-  <q-dialog v-model="visible">
-    <q-card class="q-pa-md">
+  <q-dialog
+    v-model="visible"
+    persistent
+  >
+    <q-card class="T20">
       <q-card-section
         class="q-pt-none"
         style="min-width: 300px;"

@@ -11,18 +11,19 @@ export default defineEventHandler(async (event) => {
 
   if (query.menuId) {
     // 특정 menuId에 맞는 데이터를 조회
-    const { data: specificData, error: specificError } = await client
+    const { data: targetData, error: targetError } = await client
       .from('TB_MENU')
       .select('*')
       .eq('menuId', query.menuId);
 
-    data = specificData;
-    error = specificError;
+    data = targetData;
+    error = targetError;
   } else {
     // 전체 메뉴를 조회
     const { data: allData, error: allError } = await client
       .from('TB_MENU')
-      .select('*');
+      .select('*')
+      .order('sortOrdr');
     data = allData;
     error = allError;
   }

@@ -29,36 +29,34 @@ const confirmClose = (isCallback) => {
 </script>
 
 <template>
-  <div class="q-pa-md q-gutter-sm">
-    <q-dialog
-      v-model="visible"
-      persistent
-    >
-      <q-card>
-        <q-card-section
-          class="row items-center"
-          style="min-width: 300px;"
-        >
-          <span class="q-ml-sm">{{ content }}</span>
-        </q-card-section>
+  <q-dialog
+    v-model="visible"
+    persistent
+  >
+    <q-card class="T0 B0">
+      <q-card-section
+        class="row items-center"
+        style="min-width: 300px;"
+      >
+        <span class="q-ml-sm">{{ content }}</span>
+      </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn
-            v-close-popup
-            flat
-            :label="confirm"
-            color="primary"
-            @click="confirmClose(true)"
-          />
-          <q-btn
-            v-close-popup
-            flat
-            :label="cancel"
-            color="primary"
-            @click="confirmClose(false)"
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-  </div>
+      <q-card-actions align="right">
+        <q-btn
+          v-close-popup
+          flat
+          :label="confirm"
+          color="primary"
+          @click="confirmClose(true)"
+        />
+        <q-btn
+          v-close-popup
+          flat
+          :label="cancel"
+          color="primary"
+          @click="confirmClose(false)"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>

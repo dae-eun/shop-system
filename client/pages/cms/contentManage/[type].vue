@@ -1,10 +1,11 @@
 <script setup>
+import BoardInfoViewer from '~/components/cms/BoardInfoViewer.vue';
 import MenuController from '~/components/cms/MenuController.vue';
 import MenuInfoViewer from '~/components/cms/MenuInfoViewer.vue';
 import { controllMenuStore } from '~/stores/menu/menuStore';
 
 const route = useRoute();
-const splitterModel = ref(40);
+const splitterModel = ref(30);
 
 const menuTree = ref([]);
 const selected = ref(null);
@@ -57,7 +58,7 @@ const reset = () => {
 };
 
 const callMenuTree = async () => {
-  await controllMenuStore().fetchAllMenus().then(() => {
+  await controllMenuStore().getData().then(() => {
     if (controllMenuStore().statusCode !== 200) throw controllMenuStore().error;
     reset();
   });
@@ -75,12 +76,13 @@ onMounted(async () => {
     >
       <template #before>
         <q-card-section class="mT20">
-          <MenuController
-            v-if="route.params.type==='menu'"
-            v-model:menuTree="menuTree"
-            v-model:targetMenu="targetMenu"
-            v-model:selected="selected"
-          />
+          <template v-if="route.params.type==='menu'">
+            <MenuController
+              v-model:menuTree="menuTree"
+              v-model:targetMenu="targetMenu"
+              v-model:selected="selected"
+            />
+          </template>
         </q-card-section>
         <div class="q-ma-md">
           <q-scroll-area
@@ -93,18 +95,30 @@ onMounted(async () => {
               node-key="menuId"
               selected-color="primary"
               @update:selected="getTreeTargetInfo"
-            />
+            >
+              <template #header-board="prop">
+                <div>
+                  {{ prop.node.label }} (게시판)
+                </div>
+              </template>
+            </q-tree>
           </q-scroll-area>
         </div>
       </template>
 
       <template #after>
-        <MenuInfoViewer
-          v-if="route.params.type==='menu'"
-          v-model:menuTree="menuTree"
-          v-model:targetMenu="targetMenu"
-          v-model:selected="selected"
-        />
+        <template v-if="route.params.type==='menu'">
+          <MenuInfoViewer
+            v-model:menuTree="menuTree"
+            v-model:targetMenu="targetMenu"
+            v-model:selected="selected"
+          />
+        </template>
+        <template v-if="route.params.type==='board'">
+          <BoardInfoViewer
+            v-model:targetMenu="targetMenu"
+          />
+        </template>
       </template>
     </q-splitter>
   </div>

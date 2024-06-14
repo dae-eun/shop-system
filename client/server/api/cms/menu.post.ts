@@ -1,13 +1,14 @@
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
 
 interface MenuData {
-  menuNm: Number
+  menuNm: String
   upperMenuId: Number
   level: Number
   url: String | null
   menuType: String
   pageType: String | null
   sortOrdr: String
+  boardType: String
   useAt: Boolean
 };
 export default defineEventHandler(async (event) => {
@@ -25,10 +26,11 @@ export default defineEventHandler(async (event) => {
     menuType: body.menuType,
     pageType: body?.pageType ?? null,
     sortOrdr: body.sortOrdr,
+    boardType: body.boardType,
     useAt: body.useAt,
   };
 
-  const { data, error } = await client
+  const { error } = await client
     .from('TB_MENU')
     .insert([insertData]);
 
@@ -36,6 +38,6 @@ export default defineEventHandler(async (event) => {
     console.error('Error adding menu:', error);
     return { statusCode: 500, message: 'Internal Server Error' };
   } else {
-    return { statusCode: 201, message: '메뉴를 추가하였습니다.', menuInfo: data };
+    return { statusCode: 201, message: '메뉴를 추가하였습니다.' };
   }
 });

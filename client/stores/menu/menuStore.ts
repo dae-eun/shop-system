@@ -10,8 +10,10 @@ interface Menu {
   url: string
   menuType: string
   pageType: string
+  boardType: string
   sortOrdr: number
   useAt: boolean
+  header?: string
 }
 
 interface MenuResponse {
@@ -33,7 +35,7 @@ export const controllMenuStore = defineStore('controllMenuStore', {
     error: '',
   }),
   actions: {
-    async fetchAllMenus() {
+    async getData() {
       try {
         const { statusCode, message, menuInfo } = await $fetch('/api/cms/menu', {
           method: 'GET',
@@ -42,7 +44,10 @@ export const controllMenuStore = defineStore('controllMenuStore', {
         this.message = message;
         if (statusCode === 200) {
           this.menuInfo = menuInfo || [];
-          this.menuInfo.map(el => el.label = el.menuNm);
+          this.menuInfo.map((el) => {
+            el.label = el.menuNm;
+            el.header = el.menuType;
+          });
         }
         return this.$state;
       } catch (error) {
@@ -88,7 +93,7 @@ export const controllMenuStore = defineStore('controllMenuStore', {
         this.error = err.message;
       }
     },
-    async deleteMenu(menuId: number) {
+    async deleteData(menuId: number) {
       try {
         const { statusCode, message } = await $fetch(`/api/cms/menu`, {
           method: 'DELETE',

@@ -16,7 +16,7 @@ onMounted(() => {
 
 <template>
   <q-layout view="hHh lpR ffr">
-    <q-header class="bg-primary text-white">
+    <q-header class="bg-secondary text-white">
       <q-toolbar>
         <q-toolbar-title class="text-center">
           <nuxt-link
@@ -83,10 +83,7 @@ onMounted(() => {
     >
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="">
-          </q-avatar>
-          <div>Title</div>
+          <div>작업 중...</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -95,7 +92,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
   .inner {
-    width: 1024px;
+    width: 1280px;
     margin: 0 auto;
   }
 </style>
