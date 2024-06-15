@@ -61,6 +61,9 @@ const deleteData = () => {
           showAlertModal(controllMenuStore().message, async () => {
             return await resetData();
           });
+        }).catch((error) => {
+          console.error('Delete menu failed:', error);
+          showAlertModal(error);
         });
       }
     });

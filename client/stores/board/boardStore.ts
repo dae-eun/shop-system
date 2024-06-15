@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useFetchBase } from '~/composables/api/index';
 
 interface BoardData {
   menuId: Number
@@ -28,9 +29,13 @@ export const controllBoardStore = defineStore('controllBoardStore', {
   actions: {
     async getData(menuId: number) {
       try {
-        const { statusCode, message, boardInfo } = await $fetch(`/api/cms/board?menuId=${menuId}`, {
-          method: 'GET',
-        }) as boardResponse;
+        const { statusCode, message, boardInfo } = await useFetchBase(
+          `/api/cms/board?menuId=${menuId}`, {
+            method: 'GET',
+          });
+        //   const { statusCode, message, boardInfo } = await $fetch(`/api/cms/board?menuId=${menuId}`, {
+        //   method: 'GET',
+        // }) as boardResponse;
         this.statusCode = statusCode;
         this.message = message;
         if (statusCode === 200) {
@@ -44,15 +49,11 @@ export const controllBoardStore = defineStore('controllBoardStore', {
     },
     async insertData(boardInfo: BoardData) {
       try {
-        const response = await $fetch('/api/cms/board', {
+        const { statusCode, message } = await useFetchBase('/api/cms/board', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify(boardInfo),
         }) as boardResponse;
 
-        const { statusCode, message } = response;
         this.statusCode = statusCode;
         this.message = message;
         return this.$state;
@@ -63,11 +64,8 @@ export const controllBoardStore = defineStore('controllBoardStore', {
     },
     async updateData(boardInfo: BoardData) {
       try {
-        const response = await $fetch('/api/cms/board', {
+        const response = await useFetchBase('/api/cms/board', {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify(boardInfo),
         }) as boardResponse;
 
@@ -82,7 +80,7 @@ export const controllBoardStore = defineStore('controllBoardStore', {
     },
     async deleteData(boardId: number) {
       try {
-        const { statusCode, message } = await $fetch(`/api/cms/board`, {
+        const { statusCode, message } = await useFetchBase(`/api/cms/board`, {
           method: 'DELETE',
           body: JSON.stringify({ boardId }),
         }) as boardResponse;

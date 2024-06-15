@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useFetchBase } from '~/composables/api/index';
 
 interface Menu {
   children?: Menu[]
@@ -37,7 +38,7 @@ export const controllMenuStore = defineStore('controllMenuStore', {
   actions: {
     async getData() {
       try {
-        const { statusCode, message, menuInfo } = await $fetch('/api/cms/menu', {
+        const { statusCode, message, menuInfo } = await useFetchBase('/api/cms/menu', {
           method: 'GET',
         }) as MenuResponse;
         this.statusCode = statusCode;
@@ -57,11 +58,8 @@ export const controllMenuStore = defineStore('controllMenuStore', {
     },
     async insertMenu(menu: Menu) {
       try {
-        const response = await $fetch('/api/cms/menu', {
+        const response = await useFetchBase('/api/cms/menu', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify(menu),
         }) as MenuResponse;
 
@@ -76,11 +74,8 @@ export const controllMenuStore = defineStore('controllMenuStore', {
     },
     async updateMenu(menu: Menu) {
       try {
-        const response = await $fetch('/api/cms/menu', {
+        const response = await useFetchBase('/api/cms/menu', {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify(menu),
         }) as MenuResponse;
 
@@ -95,7 +90,7 @@ export const controllMenuStore = defineStore('controllMenuStore', {
     },
     async deleteData(menuId: number) {
       try {
-        const { statusCode, message } = await $fetch(`/api/cms/menu`, {
+        const { statusCode, message } = await useFetchBase(`/api/cms/menu`, {
           method: 'DELETE',
           body: JSON.stringify({ menuId }),
         }) as MenuResponse;

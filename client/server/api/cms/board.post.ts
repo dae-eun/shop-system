@@ -7,7 +7,9 @@ interface BoardData {
   writer: String
   editor: String
   useAt: Boolean
+  attachmentData?: JSON
 };
+
 export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event);
   const client = await serverSupabaseClient(event);
@@ -32,14 +34,31 @@ export default defineEventHandler(async (event) => {
     editor: userData[0].userName,
     useAt: body.useAt,
   };
-  const { error } = await client
+
+  const { data, error } = await client
     .from('TB_BOARD')
-    .insert([insertData]);
+    .insert([insertData])
+    .select('boardId');
 
   if (error) {
     console.error('Error adding menu:', error);
     return { statusCode: 500, message: 'Internal Server Error' };
-  } else {
+  }
+
+  const uploadList = body.uploadList;
+  if (uploadList && uploadList.length > 0) {
+    for (const uploadFile of uploadList) {
+      const { error } = await client
+        .from('TB_ATTACHMENT')
+        .update({ boardId: data[0].boardId })
+        .match({ fileUid: uploadFile.fileUid });
+
+      if (error) {
+        console.error('Error updating attachment:', error);
+        return { statusCode: 500, message: 'Internal Server Error' };
+      }
+    }
     return { statusCode: 201, message: '게시글을 작성하였습니다.' };
   }
+  return { statusCode: 201, message: '게시글을 작성하였습니다.' };
 });

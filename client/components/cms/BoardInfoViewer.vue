@@ -1,5 +1,6 @@
 <script setup>
-import Board from '~/components/cms/Board';
+import BoardEditor from '~/components/cms/BoardEditor';
+import Board from '~/components/cms/BoardList';
 import { controllBoardStore } from '~/stores/board/boardStore';
 
 const { showConfirmModal, showAlertModal } = useModal();
@@ -44,58 +45,34 @@ const configOfBoard = ref({
     boardItem.value.boardId = row.boardId;
     boardItem.value.title = row.title;
     boardItem.value.content = row.content;
+    boardItem.value.attachmentData = row.attachmentData;
     boardItem.value.useAt = row.useAt === '노출' ? true : false;
     isEdit.value = true;
-    editBoard.value = true;
+    isShow.value = true;
   },
 });
 
 // 팝업
-const editBoard = ref(false);
+const isShow = ref(false);
 const isEdit = ref(false);
 const boardItem = ref({
   menuId: '',
   title: '',
   content: '',
   useAt: false,
+  attachmentData: [],
+  deleteList: [],
+  uploadList: [],
 });
 
-const insertImg = () => {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = '.png, .jpg';
-  let file;
-  input.onchange = (_) => {
-    const files = Array.from(input.files);
-    file = files[0];
-
-    const reader = new FileReader();
-    let dataUrl = '';
-    reader.onloadend = () => {
-      dataUrl = reader.result;
-      boardItem.value.content += '<div><img src="' + dataUrl + '" /></div>';
-    };
-    reader.readAsDataURL(file);
-  };
-  input.click();
-};
-const definitions = {
-  insert_img: {
-    tip: '사진 첨부',
-    label: '사진넣기',
-    icon: 'photo',
-    handler: insertImg,
-  },
-};
-const board_not_null_rules = (v) => {
-  if (!v) return '필수 값 입니다.';
-  return true;
-};
 const editorReset = () => {
   delete boardItem.value.boardId;
   boardItem.value.title = '';
   boardItem.value.content = '';
   boardItem.value.useAt = false;
+  boardItem.value.attachmentData = [];
+  boardItem.value.deleteList = [];
+  boardItem.value.uploadList = [];
   isEdit.value = false;
 };
 const rules = () => {
@@ -105,6 +82,7 @@ const rules = () => {
   }
   return true;
 };
+
 const createOrUpdateData = () => {
   if (rules() === false) return;
   if (!isEdit.value) {
@@ -114,7 +92,7 @@ const createOrUpdateData = () => {
         if (controllBoardStore().statusCode !== 201) throw controllBoardStore().error;
         showAlertModal(controllBoardStore().message, async () => {
           await getData();
-          editBoard.value = false;
+          isShow.value = false;
         });
       }).catch((error) => {
         console.error('Insert menu failed:', error);
@@ -123,11 +101,12 @@ const createOrUpdateData = () => {
     });
   } else {
     showConfirmModal('게시글을 수정하시겠습니까?', async () => {
+      console.log(boardItem.value);
       await controllBoardStore().updateData(boardItem.value).then(() => {
         if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
         showAlertModal(controllBoardStore().message, async () => {
           await getData();
-          editBoard.value = false;
+          isShow.value = false;
         });
       }).catch((error) => {
         console.error('Insert menu failed:', error);
@@ -140,12 +119,14 @@ const createOrUpdateData = () => {
 const getData = async () => {
   try {
     await controllBoardStore().getData(targetMenu.value.menuId).then(() => {
-      if (controllBoardStore().statusCode !== 200) throw controllBoardStore().error;
+      if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
       controllBoardStore().boardInfo.map((el) => {
         el.useAt = el.useAt ? '노출' : '미노출';
         el.modDate = dayjs(el.modDate).format('YYYY-MM-DD HH:mm');
         el.regDate = dayjs(el.regDate).format('YYYY-MM-DD HH:mm');
       });
+      // const boardData = controllBoardStore().boardInfo.filter((el) => !el.attachmentData)
+      // const attachmentData = controllBoardStore().boardInfo.filter((el) => el.attachmentData)
       configOfBoard.value.rows = controllBoardStore().boardInfo;
     });
   } catch (error) {
@@ -155,7 +136,7 @@ const getData = async () => {
 
 const deleteData = () => {
   showConfirmModal('삭제하시겠습니까? 삭제한 데이터는 복구가 불가능합니다.', async () => {
-    await controllBoardStore().deleteData(targetMenu.value.menuId).then(() => {
+    await controllBoardStore().deleteData(configOfBoard.value.selectedBoard[0].boardId).then(() => {
       if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
       showAlertModal(controllBoardStore().message, async () => {
         return await getData();
@@ -200,7 +181,7 @@ watchEffect(async () => {
           flat
           square
           class="bg-secondary text-white w-150 mL10"
-          @click="editBoard = true"
+          @click="isShow = true"
         >
           게시글 작성
         </q-btn>
@@ -215,68 +196,13 @@ watchEffect(async () => {
       </template>
     </q-card-section>
   </q-card>
-  <q-dialog
-    v-model="editBoard"
-    full-width
-    full-height
-    @hide="editorReset"
-  >
-    <q-card>
-      <q-card-section class="row justify-between items-center">
-        <q-space />
-        <q-btn
-          v-close-popup
-          flat
-          round
-          dense
-          icon="close"
-        />
-      </q-card-section>
-      <q-card-section>
-        <q-input
-          v-model="boardItem.title"
-          :rules="[board_not_null_rules]"
-          outlined
-          label="제목"
-        />
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-section
-        class="scroll"
-      >
-        <q-editor
-          v-model="boardItem.content"
-          min-height="37rem"
-          :definitions="definitions"
-          :toolbar="[['left', 'center', 'right', 'justify'], ['bold', 'italic', 'underline', 'strike'], ['undo', 'redo'], ['insert_img']]"
-        />
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions align="right">
-        <q-toggle
-          v-model="boardItem.useAt"
-          label="노출 여부"
-          left-label
-        />
-
-        <!-- <q-btn
-          flat
-          label="미리보기"
-          color="primary"
-        /> -->
-        <q-btn
-          flat
-          :label="isEdit?'수정하기':'게시하기'"
-          color="primary"
-          @click="createOrUpdateData"
-        />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+  <BoardEditor
+    v-model:isShow="isShow"
+    v-model:boardItem="boardItem"
+    v-model:is-edit="isEdit"
+    @confirm="createOrUpdateData"
+    @close="editorReset"
+  />
 </template>
 
 <style lang="scss" scoped>

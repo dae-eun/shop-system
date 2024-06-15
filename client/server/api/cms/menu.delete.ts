@@ -46,6 +46,7 @@ export default defineEventHandler(async (event) => {
     return { statusCode: 200, message: '메뉴와 하위 항목들을 삭제했습니다.' };
   } catch (err) {
     console.error(err);
+    console.log('실패');
     return { statusCode: 500, message: 'Internal Server Error' };
   }
 });

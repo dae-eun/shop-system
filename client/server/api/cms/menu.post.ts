@@ -24,11 +24,11 @@ export default defineEventHandler(async (event) => {
     level: body.level,
     url: body?.url ?? null,
     menuType: body.menuType,
-    pageType: body?.pageType ?? null,
     sortOrdr: body.sortOrdr,
-    boardType: body.boardType,
     useAt: body.useAt,
   };
+  if (body.boardType) Object.assign(insertData, { boardType: body.boardType });
+  if (body.pageType) Object.assign(insertData, { pageType: body.pageType });
 
   const { error } = await client
     .from('TB_MENU')

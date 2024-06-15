@@ -7,20 +7,44 @@ export default defineEventHandler(async (event) => {
 
   if (!user) return { statusCode: 401, message: 'Authentication required' };
 
-  if (!query.menuId) return { statusCode: 400, message: '조회할 메뉴의 아이디를 입력해주세요.' }; ;
+  if (!query.menuId) {
+    return { statusCode: 400, message: '조회할 메뉴의 아이디를 입력해주세요.' };
+  }
 
-  const { data, error } = await client
+  const { data: boardsData, error: boardsError } = await client
     .from('TB_BOARD')
     .select('*')
     .eq('menuId', query.menuId)
-    .order('boardId');
+    .order('boardId', { ascending: false });
 
-  if (error) {
-    console.error('Error fetching menu:', error);
+  if (boardsError) {
+    console.error('Error fetching boards:', boardsError);
     return { statusCode: 500, message: 'Internal Server Error' };
-  } else if (!data) {
-    return { statusCode: 404, message: '게시글이 존재하지 않습니다.' };
-  } else {
-    return { statusCode: 200, message: '조회하였습니다.', boardInfo: data };
+  } else if (!boardsData.length) {
+    return { statusCode: 404, message: '게시물이 존재하지 않습니다.' };
   }
+
+  const boardInfoPromises = boardsData.map((board: { boardId: number }) => {
+    return Promise.resolve(
+      client
+        .from('TB_ATTACHMENT')
+        .select('*')
+        .filter('boardId', 'eq', board.boardId),
+    )
+      .then(attachmentData => ({
+        ...board,
+        attachmentData: attachmentData ? attachmentData.data : [],
+      }))
+      .catch((error: any) => {
+        console.error('Error fetching attachments for board:', error);
+        return {
+          ...board,
+          attachmentData: [],
+        };
+      });
+  });
+
+  const boardInfos = await Promise.all(boardInfoPromises);
+
+  return { statusCode: 200, message: '조회하였습니다.', boardInfo: boardInfos };
 });

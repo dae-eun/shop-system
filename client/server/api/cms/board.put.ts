@@ -10,6 +10,7 @@ interface BoardData {
   useAt: Boolean
   regDate?: String
   modDate?: String
+  attachmentData?: Array<any>
 };
 
 export default defineEventHandler(async (event) => {
@@ -57,6 +58,40 @@ export default defineEventHandler(async (event) => {
     editor: userData[0].userName,
     useAt: body.useAt,
   };
+
+  // uploadList가 있을 경우
+  const uploadList = body.uploadList;
+  if (uploadList && uploadList.length > 0) {
+    for (const uploadFile of uploadList) {
+      const { error } = await client
+        .from('TB_ATTACHMENT')
+        .update({ boardId: body.boardId })
+        .match({ fileUid: uploadFile.fileUid });
+
+      if (error) {
+        console.error('Error updating attachment:', error);
+        return { statusCode: 500, message: 'Internal Server Error' };
+      }
+    }
+  }
+
+  // deleteList가 있을 경우
+  const deleteList = body.deleteList;
+  console.log(deleteList);
+  if (deleteList && deleteList.length > 0) {
+    for (const deleteFile of deleteList) {
+      console.log(deleteFile.fileUid);
+      const { error } = await client
+        .from('TB_ATTACHMENT')
+        .update({ boardId: null })
+        .match({ fileUid: deleteFile.fileUid });
+
+      if (error) {
+        console.error('Error deleting attachment:', error);
+        return { statusCode: 500, message: 'Internal Server Error' };
+      }
+    }
+  }
 
   try {
     const { error } = await client
