@@ -87,7 +87,7 @@ const board_not_null_rules = (v) => {
           label="제목"
         />
       </q-card-section>
-      <template v-if="boardType==='image'">
+      <template v-if="boardType==='Image'">
         <q-card-section
           flat
           class="row justify-start items-center"
@@ -133,7 +133,7 @@ const board_not_null_rules = (v) => {
       >
         <q-editor
           v-model="boardItem.content"
-          :min-height="boardType==='image'?'28rem':'36rem'"
+          :min-height="boardType==='Image'?'28rem':'36rem'"
           :definitions="definitions"
           :toolbar="[['left', 'center', 'right', 'justify'], ['bold', 'italic', 'underline', 'strike'], ['undo', 'redo'], ['insert_img']]"
         />
