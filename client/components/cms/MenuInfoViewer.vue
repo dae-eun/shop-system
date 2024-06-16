@@ -83,11 +83,11 @@ const menu_non_rules = () => {
   return true;
 };
 const menu_type_menu_rules = () => {
-  if (targetMenu.value.menuType === 'board' && !targetMenu.value.boardType) {
+  if (targetMenu.value.menuType === 'Board' && !targetMenu.value.boardType) {
     showAlertModal('게시판 타입을 선택해주세요.');
     return false;
   }
-  if (targetMenu.value.menuType === 'board' && !targetMenu.value.pageType) {
+  if (targetMenu.value.menuType === 'Board' && !targetMenu.value.pageType) {
     showAlertModal('페이지 형태를 선택해주세요.');
     return false;
   }
@@ -95,7 +95,7 @@ const menu_type_menu_rules = () => {
 };
 
 watchEffect(() => {
-  if (targetMenu.value.menuType === 'menu') {
+  if (targetMenu.value.menuType === 'Menu') {
     targetMenu.value.boardType = '';
     targetMenu.value.pageType = '';
   }
@@ -180,7 +180,7 @@ watchEffect(() => {
                 />
               </div>
             </div>
-            <template v-if="targetMenu.menuType==='board'">
+            <template v-if="targetMenu.menuType==='Board'">
               <div class="q-mr-md flex">
                 <div class="self-center text-weight-bold">
                   게시판 타입

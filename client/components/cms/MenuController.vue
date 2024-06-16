@@ -14,7 +14,7 @@ class MenuItem {
     this.upperMenuId = upperMenuId;
     this.level = level + 1;
     this.url = '';
-    this.menuType = 'menu';
+    this.menuType = 'Menu';
     this.boardType = null;
     this.pageType = null;
     this.sortOrdr = length + 1;

@@ -10,6 +10,10 @@ const isEdit = defineModel ('isEdit', {
   type: Boolean,
   default: false,
 });
+const boardType = defineModel ('boardType', {
+  type: String,
+  default: '',
+});
 const boardItem = defineModel ('boardItem', {
   type: Object,
   default: () => ({
@@ -83,42 +87,44 @@ const board_not_null_rules = (v) => {
           label="제목"
         />
       </q-card-section>
-      <q-card-section
-        flat
-        class="row justify-start items-center"
-      >
-        <q-card
+      <template v-if="boardType==='image'">
+        <q-card-section
           flat
-          class="col-1"
+          class="row justify-start items-center"
         >
-          기존 첨부 파일
-        </q-card>
-        <q-card class="col-11">
-          <FileList
-            v-model:attachmentData="boardItem.attachmentData"
-            v-model:deleteList="boardItem.deleteList"
-          />
-        </q-card>
-      </q-card-section>
-      <q-card-section
-        flat
-        class="row justify-start items-center"
-      >
-        <q-card
+          <q-card
+            flat
+            class="col-1"
+          >
+            기존 첨부 파일
+          </q-card>
+          <q-card class="col-11">
+            <FileList
+              v-model:attachmentData="boardItem.attachmentData"
+              v-model:deleteList="boardItem.deleteList"
+            />
+          </q-card>
+        </q-card-section>
+        <q-card-section
           flat
-          class="col-1"
+          class="row justify-start items-center"
         >
-          파일 첨부
-        </q-card>
-        <q-card class="col-11">
-          <Uploader
-            v-model:uploadList="boardItem.uploadList"
-            :multi="true"
-            :max-files="5"
-            :board-id="boardItem.boardId"
-          />
-        </q-card>
-      </q-card-section>
+          <q-card
+            flat
+            class="col-1"
+          >
+            파일 첨부
+          </q-card>
+          <q-card class="col-11">
+            <Uploader
+              v-model:uploadList="boardItem.uploadList"
+              :multi="true"
+              :max-files="5"
+              :board-id="boardItem.boardId"
+            />
+          </q-card>
+        </q-card-section>
+      </template>
 
       <q-separator />
 
@@ -127,7 +133,7 @@ const board_not_null_rules = (v) => {
       >
         <q-editor
           v-model="boardItem.content"
-          min-height="28rem"
+          :min-height="boardType==='image'?'28rem':'36rem'"
           :definitions="definitions"
           :toolbar="[['left', 'center', 'right', 'justify'], ['bold', 'italic', 'underline', 'strike'], ['undo', 'redo'], ['insert_img']]"
         />

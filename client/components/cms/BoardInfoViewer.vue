@@ -148,7 +148,7 @@ const deleteData = () => {
 };
 
 watchEffect(async () => {
-  if (Object.keys(targetMenu.value) && targetMenu.value.menuType === 'board') {
+  if (Object.keys(targetMenu.value) && targetMenu.value.menuType === 'Board') {
     await getData();
   }
 });
@@ -161,10 +161,10 @@ watchEffect(async () => {
   >
     <q-card-section class="flex align-center B0">
       <p class="title text-weight-bold mB0">
-        {{ targetMenu.menuType==='board'? targetMenu.menuNm :'' }} 정보
+        {{ targetMenu.menuType==='Board'? targetMenu.menuNm :'' }} 정보
       </p>
       <q-btn-group
-        v-if="targetMenu.menuType==='board'"
+        v-if="targetMenu.menuType==='Board'"
         flat
         class="row justify-end full-width mB20"
       >
@@ -188,7 +188,10 @@ watchEffect(async () => {
       </q-btn-group>
     </q-card-section>
     <q-card-section class="row">
-      <template v-if="targetMenu.menuType==='board'">
+      <template v-if="targetMenu.menuType==='Board'">
+        <Board v-model:configOfBoard="configOfBoard" />
+      </template>
+      <template v-if="targetMenu.menuType==='Thumbnail'">
         <Board v-model:configOfBoard="configOfBoard" />
       </template>
       <template v-else>
@@ -197,6 +200,7 @@ watchEffect(async () => {
     </q-card-section>
   </q-card>
   <BoardEditor
+    v-model:boardType="targetMenu.boardType"
     v-model:isShow="isShow"
     v-model:boardItem="boardItem"
     v-model:is-edit="isEdit"
