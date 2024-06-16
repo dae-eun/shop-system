@@ -188,22 +188,22 @@ watchEffect(() => {
                 <div>
                   <q-radio
                     v-model="targetMenu.boardType"
-                    val="product"
+                    val="Product"
                     label="제품"
                   />
                   <q-radio
                     v-model="targetMenu.boardType"
-                    val="text"
+                    val="Text"
                     label="텍스트"
                   />
                   <q-radio
                     v-model="targetMenu.boardType"
-                    val="image"
+                    val="Image"
                     label="이미지"
                   />
                   <q-radio
                     v-model="targetMenu.boardType"
-                    val="content"
+                    val="Content"
                     label="컨텐츠"
                   />
                 </div>
