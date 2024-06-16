@@ -143,6 +143,11 @@ const board_not_null_rules = (v) => {
 
       <q-card-actions align="right">
         <q-toggle
+          v-model="boardItem.pin"
+          label="상단 고정"
+          left-label
+        />
+        <q-toggle
           v-model="boardItem.useAt"
           label="노출 여부"
           left-label

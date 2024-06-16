@@ -22,7 +22,7 @@ const configOfBoard = ref({
     rowsPerPage: 5,
     // rowsNumber: xx if getting data from a server
   },
-  visibleColumns: ['boardId', 'title', 'writer', 'editor', 'modDate', 'regDate', 'useAt'],
+  visibleColumns: ['boardId', 'title', 'writer', 'editor', 'modDate', 'pin', 'regDate', 'useAt'],
   columns: [
     {
       name: 'desc',
@@ -37,6 +37,7 @@ const configOfBoard = ref({
     { name: 'regDate', label: '수정일', align: 'center', field: 'regDate' },
     { name: 'writer', label: '작성자', align: 'center', field: 'writer' },
     { name: 'editor', label: '수정자', align: 'center', field: 'editor' },
+    { name: 'pin', label: '상단고정', align: 'center', field: 'pin' },
     { name: 'useAt', label: '노출여부', align: 'center', field: 'useAt' },
   ],
   rows: [],
@@ -46,6 +47,7 @@ const configOfBoard = ref({
     boardItem.value.title = row.title;
     boardItem.value.content = row.content;
     boardItem.value.attachmentData = row.attachmentData;
+    boardItem.value.pin = row.pin;
     boardItem.value.useAt = row.useAt === '노출' ? true : false;
     isEdit.value = true;
     isShow.value = true;
@@ -121,6 +123,7 @@ const getData = async () => {
     await controllBoardStore().getData(targetMenu.value.menuId).then(() => {
       if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
       controllBoardStore().boardInfo.map((el) => {
+        el.pin = el.pin ? '고정' : '미고정';
         el.useAt = el.useAt ? '노출' : '미노출';
         el.modDate = dayjs(el.modDate).format('YYYY-MM-DD HH:mm');
         el.regDate = dayjs(el.regDate).format('YYYY-MM-DD HH:mm');
@@ -191,7 +194,7 @@ watchEffect(async () => {
       <template v-if="targetMenu.menuType==='Board'">
         <Board v-model:configOfBoard="configOfBoard" />
       </template>
-      <template v-if="targetMenu.menuType==='Thumbnail'">
+      <template v-else-if="targetMenu.menuType==='Thumbnail'">
         <Board v-model:configOfBoard="configOfBoard" />
       </template>
       <template v-else>

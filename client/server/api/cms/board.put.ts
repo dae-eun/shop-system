@@ -8,6 +8,7 @@ interface BoardData {
   writer: String
   editor: String
   useAt: Boolean
+  pin: Boolean
   regDate?: String
   modDate?: String
   attachmentData?: Array<any>
@@ -57,6 +58,7 @@ export default defineEventHandler(async (event) => {
     content: body.content,
     editor: userData[0].userName,
     useAt: body.useAt,
+    pin: body.pin,
   };
 
   // uploadList가 있을 경우
