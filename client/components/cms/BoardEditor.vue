@@ -20,6 +20,7 @@ const boardItem = defineModel ('boardItem', {
     title: '',
     content: '',
     useAt: true,
+    pin: false,
     attachmentData: [],
     uploadList: [],
     deleteList: [],

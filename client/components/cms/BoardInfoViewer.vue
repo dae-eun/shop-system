@@ -47,7 +47,7 @@ const configOfBoard = ref({
     boardItem.value.title = row.title;
     boardItem.value.content = row.content;
     boardItem.value.attachmentData = row.attachmentData;
-    boardItem.value.pin = row.pin;
+    boardItem.value.pin = row.pin === '고정' ? true : false;
     boardItem.value.useAt = row.useAt === '노출' ? true : false;
     isEdit.value = true;
     isShow.value = true;
