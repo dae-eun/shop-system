@@ -215,12 +215,12 @@ watchEffect(() => {
                 <div>
                   <q-radio
                     v-model="targetMenu.pageType"
-                    val="infinite"
+                    val="Infinite"
                     label="무한스크롤"
                   />
                   <q-radio
                     v-model="targetMenu.pageType"
-                    val="page"
+                    val="Page"
                     label="페이지네이션"
                   />
                 </div>
