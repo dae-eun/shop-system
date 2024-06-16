@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.BASE_URL,
+      SUPABASE_IMAGES_BUCKET: process.env.SUPABASE_IMAGES_BUCKET,
     },
   },
   css: ['@/assets/scss/app.scss', 'swiper/swiper-bundle.css'],

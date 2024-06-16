@@ -1,8 +1,8 @@
 <script setup>
-import HamburgerIsLogin from '~/components/layouts/HamburgerIsLogin';
-import HamburgerIsLogout from '~/components/layouts/HamburgerIsLogout';
-import HamburgerSubMenu from '~/components/layouts/HamburgerSubMenu';
-import { getUserInfoStore } from '~/stores/auth/loginStore';
+import HamburgerIsLogin from '~/components/layouts/HamburgerIsLogin.vue';
+import HamburgerIsLogout from '~/components/layouts/HamburgerIsLogout.vue';
+import HamburgerSubMenu from '~/components/layouts/HamburgerSubMenu.vue';
+import { getUserInfoStore } from '~/stores/auth/loginStore.ts';
 
 const route = useRoute();
 const rightDrawerOpen = ref(false);
@@ -42,6 +42,10 @@ onMounted(() => {
         <q-route-tab
           to="/cms"
           label="home"
+        />
+        <q-route-tab
+          to="/cms/contentManage/thumbnail"
+          label="thumbnail"
         />
         <q-route-tab
           to="/cms/contentManage/menu"
