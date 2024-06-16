@@ -23,7 +23,7 @@ export const useFetchBase = async (url: string, options: RequestOptions): Promis
   return await $fetch(url, requestOptions)
     .then((response) => {
       if (![200, 201, 202, 204].includes(response.statusCode)) {
-        throw response.error;
+        throw response.message;
       }
       return response;
     })
