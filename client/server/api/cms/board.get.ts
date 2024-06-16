@@ -20,8 +20,6 @@ export default defineEventHandler(async (event) => {
   if (boardsError) {
     console.error('Error fetching boards:', boardsError);
     return { statusCode: 500, message: 'Internal Server Error' };
-  } else if (!boardsData.length) {
-    return { statusCode: 404, message: '게시물이 존재하지 않습니다.' };
   }
 
   const boardInfoPromises = boardsData.map((board: { boardId: number }) => {
