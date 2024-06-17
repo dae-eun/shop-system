@@ -27,27 +27,27 @@ const addTreeItem = () => {
   targetMenu.value.children.push(newMenu);
   newItem.value++;
 };
-const sortObject = (type) => {
-  if (type === 'up') {
-    // const params = {
-    //   fromMenuId: regSeq.value.menuId,
-    //   fromSortOrdr: regSeq.value.sortOrdr,
-    //   toMenuId: prevSelected.value.menuId,
-    //   toSortOrdr: prevSelected.value.sortOrdr,
-    // };
-    // const { code } = await useMenuMngAPI().changeMenuSort(params);
-    // if (code !== '200') return;
-  } else if (type === 'down') {
-    // const params = {
-    //   fromMenuId: regSeq.value.menuId,
-    //   fromSortOrdr: regSeq.value.sortOrdr,
-    //   toMenuId: nextSelected.value.menuId,
-    //   toSortOrdr: nextSelected.value.sortOrdr,
-    // };
-    // const { code } = await useMenuMngAPI().changeMenuSort(params);
-    // if (code !== '200') return;
-  }
-};
+// const sortObject = (type) => {
+  // if (type === 'up') {
+// const params = {
+//   fromMenuId: regSeq.value.menuId,
+//   fromSortOrdr: regSeq.value.sortOrdr,
+//   toMenuId: prevSelected.value.menuId,
+//   toSortOrdr: prevSelected.value.sortOrdr,
+// };
+// const { code } = await useMenuMngAPI().changeMenuSort(params);
+// if (code !== '200') return;
+  // } else if (type === 'down') {
+// const params = {
+//   fromMenuId: regSeq.value.menuId,
+//   fromSortOrdr: regSeq.value.sortOrdr,
+//   toMenuId: nextSelected.value.menuId,
+//   toSortOrdr: nextSelected.value.sortOrdr,
+// };
+// const { code } = await useMenuMngAPI().changeMenuSort(params);
+// if (code !== '200') return;
+  // }
+// };
 </script>
 
 <template>
