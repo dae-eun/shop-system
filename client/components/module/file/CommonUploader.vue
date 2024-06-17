@@ -16,6 +16,10 @@ const uploadList = defineModel('uploadList', {
   type: Array,
   default: () => [],
 });
+const isUploadComplete = defineModel('isUploadComplete', {
+  type: Boolean,
+  default: false,
+});
 const supabase = useSupabaseClient();
 const uploadFilesSequentially = async (files) => {
   const results = [];
@@ -52,6 +56,7 @@ const factoryFn = async (files) => {
       await fileStore().insertFile(fileInfo).then(() => {
         if (fileStore().statusCode !== 201) throw fileStore().message;
         uploadList.value.push(fileStore().attachmentData);
+        isUploadComplete.value = true;
       }).catch((error) => {
         console.error('파일 첨부에 실패하였습니다.:', error);
         showAlertModal(error);
@@ -77,6 +82,7 @@ const onRejected = () => {
       :max-files="props.multi ? 5 : 1"
       max-file-size="5242880"
       @rejected="onRejected"
+      @added="isUploadComplete = false"
     >
       <template #list="scope">
         <q-list
