@@ -73,10 +73,7 @@ const createData = () => {
   showConfirmModal('썸네일을 추가하시겠습니까?', async () => {
     await uploadFilesSequentially(imageFile.value);
     await thumbStore().insertData(thumbnailItem.value).then(() => {
-      console.log(thumbnailItem.value);
-      console.log(thumbStore().statusCode);
       if (thumbStore().statusCode !== 201) throw thumbStore().message;
-      console.log(123456);
       showAlertModal('추가하였습니다.', () => {
         reset();
         emit('reset');
