@@ -32,7 +32,7 @@ const imageCardConfig = defineModel('imageCardConfig', {
     <q-card-actions align="right">
       <q-btn
         v-for="(btn) in imageCardConfig.btn"
-        :key="btn.label"
+        :key="btn"
         flat
         round
         :color="btn.color"

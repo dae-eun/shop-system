@@ -10,7 +10,8 @@ export default defineEventHandler(async (event) => {
   const { data, error } = await client
     .from('TB_THUMBNAIL')
     .select('*')
-    .order('sortOrdr');
+    .order('sortOrdr', { ascending: true })
+    .order('thumbId', { ascending: true });
 
   if (error) {
     console.error('Error fetching thumnail:', error);

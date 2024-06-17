@@ -1,5 +1,9 @@
 <script setup>
+import ThumbnailUploader from '~/components/cms/ThumbnailUploader.vue';
 import ImageCard from '~/components/items/ImageCard.vue';
+import { thumbStore } from '~/stores/thumb/thumbStore';
+
+const { showAlertModal, showConfirmModal } = useModal();
 
 const imageCardUseConfig = ref({
   width: 280,
@@ -8,38 +12,49 @@ const imageCardUseConfig = ref({
       color: 'teal',
       icon: 'arrow_back',
       label: 'arrow_back',
-      btnfunction: (itemInfo) => {
-        imageCardItems.value.findIndex((item, index) => {
-          if (item.filePath === itemInfo.filePath) {
-            if (index === 0) return;
-            const temp = imageCardItems.value[index - 1];
-            imageCardItems.value[index - 1] = item;
-            imageCardItems.value[index] = temp;
-          }
-        });
+      btnfunction: async (itemInfo) => {
+        const items = imageCardItems.value.filter(item => item.useAt);
+        const index = items.findIndex(item => item.filePath === itemInfo.filePath);
+        if (index > 0) {
+          const prev = items[index - 1].sortOrdr;
+          const now = items[index].sortOrdr;
+
+          items[index - 1].sortOrdr = now;
+          items[index].sortOrdr = prev;
+          await updateData();
+        }
       },
     },
     {
       color: 'teal',
       icon: 'arrow_forward',
       label: 'arrow_forward',
-      btnfunction: (itemInfo) => {
-        imageCardItems.value.findIndex((item, index) => {
-          if (item.filePath === itemInfo.filePath) {
-            if (index === imageCardItems.value.length - 1) return;
-            const temp = imageCardItems.value[index + 1];
-            imageCardItems.value[index + 1] = item;
-            imageCardItems.value[index] = temp;
-          }
-        });
+      btnfunction: async (itemInfo) => {
+        const items = imageCardItems.value.filter(item => item.useAt);
+        const index = items.findIndex(item => item.filePath === itemInfo.filePath);
+        if (index === imageCardItems.value.filter(item => item.useAt).length - 1) return;
+        const next = items[index + 1].sortOrdr;
+        const now = items[index].sortOrdr;
+
+        items[index + 1].sortOrdr = now;
+        items[index].sortOrdr = next;
+        await updateData();
       },
     },
     {
       color: 'red',
       icon: 'arrow_downward',
       label: 'arrow_downward',
-      btnfunction: (itemInfo) => {
+      btnfunction: async (itemInfo) => {
+        const targetArray = imageCardItems.value.filter(item => item.useAt);
+        const itemIndex = targetArray
+          .findIndex(item => item.filePath === itemInfo.filePath);
+        for (let i = itemIndex; i < targetArray.length - 1; i++) {
+          targetArray[i + 1].sortOrdr--;
+        }
         itemInfo.useAt = false;
+        itemInfo.sortOrdr = null;
+        await updateData();
       },
     },
   ],
@@ -54,7 +69,10 @@ const imageCardUnusedConfig = ref({
       btnfunction: (itemInfo) => {
         imageCardItems.value.findIndex((item, index) => {
           if (item.filePath === itemInfo.filePath) {
-            imageCardItems.value.splice(index, 1);
+            showConfirmModal('삭제하시겠습니까?', async () => {
+              imageCardItems.value.splice(index, 1);
+              await deleteData(itemInfo.thumbId);
+            });
           }
         });
       },
@@ -63,54 +81,52 @@ const imageCardUnusedConfig = ref({
       color: 'blue',
       icon: 'arrow_upward',
       label: 'arrow_upward',
-      btnfunction: (itemInfo) => {
+      btnfunction: async (itemInfo) => {
         itemInfo.useAt = true;
+        itemInfo.sortOrdr = imageCardItems.value.filter(item => item.useAt).length;
+        await updateData();
       },
     },
   ],
 });
-const imageCardItems = ref([
-  {
-    filePath: 'shop-sys-bucket/__.jpg',
-    title: 'title',
-    useAt: true,
-    sortOrdr: 1,
-  },
-  {
-    filePath: 'shop-sys-bucket/__.jpg',
-    title: 'title',
-    useAt: true,
-    sortOrdr: 1,
-  },
-  {
-    filePath: 'shop-sys-bucket/____.PNG',
-    title: 'title',
-    useAt: true,
-    sortOrdr: 2,
-  },
-  {
-    filePath: 'shop-sys-bucket/__.jpg',
-    title: 'title',
-    useAt: true,
-    sortOrdr: 3,
-  },
-  {
-    filePath: 'shop-sys-bucket/__.jpg',
-    title: 'title',
-    useAt: false,
-    sortOrdr: 3,
-  },
-  {
-    filePath: 'shop-sys-bucket/__.jpg',
-    title: 'title',
-    useAt: true,
-    sortOrdr: 3,
-  },
-]);
+const imageCardItems = ref([]);
 
 const isShow = ref(false);
-const thumbnailItem = ref({
-  title: '',
+const getData = async () => {
+  await thumbStore().getData().then(() => {
+    if (thumbStore().statusCode !== 200) throw thumbStore().message;
+    imageCardItems.value = thumbStore().thumbInfo;
+  }).catch((error) => {
+    console.error('데이터 조회에 실패하였습니다.:', error);
+    showAlertModal(error);
+  });
+};
+const updateData = async () => {
+  await thumbStore().updateData(imageCardItems.value).then(async () => {
+    if (thumbStore().statusCode !== 200) throw thumbStore().error;
+    await getData();
+  }).catch((error) => {
+    console.error('업데이트에 실패하였습니다.:', error);
+    showAlertModal(error);
+  });
+};
+const deleteData = async (thumbId) => {
+  try {
+    await thumbStore().deleteData(thumbId);
+    if (thumbStore().statusCode !== 200) throw thumbStore().error;
+    showAlertModal(thumbStore().message, async () => {
+      await getData();
+    });
+  } catch (error) {
+    console.error('삭제에 실패하였습니다.:', error);
+    showAlertModal(error);
+  }
+};
+watchEffect(() => {
+  imageCardItems.value.sort((a, b) => a.sortOrdr - b.sortOrdr);
+});
+onMounted(async () => {
+  await getData();
 });
 </script>
 
@@ -132,13 +148,14 @@ const thumbnailItem = ref({
         >
           썸네일 추가
         </q-btn>
-        <q-btn
+        <!-- <q-btn
           flat
           square
           class="bg-secondary text-white w-150 mL10"
+          @click="updateData"
         >
           적용
-        </q-btn>
+        </q-btn> -->
       </q-btn-group>
     </div>
     <q-card
@@ -202,8 +219,8 @@ const thumbnailItem = ref({
         class="row no-wrap"
       >
         <ImageCard
-          v-for="(item) in imageCardItems.filter((item) => !item.useAt)"
-          :key="item.filePath"
+          v-for="(item, index) in imageCardItems.filter((item) => !item.useAt)"
+          :key="index"
           v-model:imageCardConfig="imageCardUnusedConfig"
           :image-card-item="item"
           style="border: 1px solid #ccc;"
@@ -211,10 +228,10 @@ const thumbnailItem = ref({
       </q-card>
     </q-scroll-area>
   </q-card-section>
-  <!-- <ThumbnailUploader
+  <ThumbnailUploader
     v-model:isShow="isShow"
-    v-modle:thumbnailItem="thumbnailItem"
-  /> -->
+    @reset="getData"
+  />
 </template>
 
 <style lang="scss" scoped>

@@ -19,7 +19,7 @@ export const useFetchBase = async (url: string, options: RequestOptions): Promis
 
   const loadingTimeout = setTimeout(() => {
     useLoading().setLoading(true);
-  }, 300);
+  }, 600);
   return await $fetch(url, requestOptions)
     .then((response) => {
       if (![200, 201, 202, 204].includes(response.statusCode)) {

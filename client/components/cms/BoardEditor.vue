@@ -30,6 +30,7 @@ const boardItem = defineModel ('boardItem', {
 });
 const emit = defineEmits(['reset']);
 
+const isUploadComplete = ref(true);
 const editorReset = () => {
   delete boardItem.value.boardId;
   boardItem.value.title = '';
@@ -39,8 +40,13 @@ const editorReset = () => {
   boardItem.value.deleteList = [];
   boardItem.value.uploadList = [];
   isEdit.value = false;
+  isUploadComplete.value = true;
 };
 const rules = () => {
+  if (!isUploadComplete.value) {
+    showAlertModal('파일 업로드가 완료되지 않았습니다.');
+    return false;
+  }
   if (!boardItem.value.content) {
     showAlertModal('입력된 컨텐츠 내용이 없습니다.');
     return false;
@@ -173,6 +179,7 @@ const board_not_null_rules = (v) => {
           <q-card class="col-11">
             <Uploader
               v-model:uploadList="boardItem.uploadList"
+              v-model:isUploadComplete="isUploadComplete"
               :multi="true"
               :max-files="5"
               :board-id="boardItem.boardId"

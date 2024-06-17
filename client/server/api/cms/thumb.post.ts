@@ -11,6 +11,7 @@ interface FileData {
   fileUid: String
   useAt: Boolean
   sortOrdr: Number
+  link: String
 };
 export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event);
@@ -28,6 +29,7 @@ export default defineEventHandler(async (event) => {
     fileUid: body.fileUid,
     useAt: body.useAt,
     sortOrdr: body.sortOrdr,
+    link: body.link,
   };
 
   const { data, error } = await client

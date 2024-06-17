@@ -12,6 +12,7 @@ interface ThumbData {
   fileUid: String
   useAt: Boolean
   sortOrdr: Number
+  link: String
 }
 interface ThumbResponse {
   statusCode: number
@@ -67,6 +68,22 @@ export const thumbStore = defineStore('thumbStore', {
         const { statusCode, message } = await useFetchBase('/api/cms/thumb', {
           method: 'DELETE',
           body: JSON.stringify({ thumbId }),
+        }) as ThumbResponse;
+        this.statusCode = statusCode;
+        this.message = message;
+        if (statusCode !== 200) throw new Error(message);
+        return this.$state;
+      } catch (error) {
+        const err = error as SystemError;
+        this.error = err.message;
+      }
+    },
+    async updateData(thumbInfo: ThumbData) {
+      try {
+        console.log(thumbInfo);
+        const { statusCode, message } = await useFetchBase('/api/cms/thumb', {
+          method: 'PUT',
+          body: JSON.stringify(thumbInfo),
         }) as ThumbResponse;
         this.statusCode = statusCode;
         this.message = message;
