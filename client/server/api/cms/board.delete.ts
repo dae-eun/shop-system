@@ -13,13 +13,13 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // 첨부 파일 삭제
-    const { error: attachmentError } = await client
-      .from('TB_ATTACHMENT')
-      .update({ boardId: null })
-      .match({ boardId });
+    // // 첨부 파일 삭제
+    // const { error: attachmentError } = await client
+    //   .from('TB_ATTACHMENT')
+    //   .update({ boardId: null })
+    //   .match({ boardId });
 
-    if (attachmentError) return { statusCode: 500, message: 'Internal Server Error' };
+    // if (attachmentError) return { statusCode: 500, message: 'Internal Server Error' };
 
     // 이제 게시글 삭제
     const { data, error } = await client
