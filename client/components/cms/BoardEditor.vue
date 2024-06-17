@@ -1,7 +1,9 @@
 <script setup>
 import FileList from '~/components/module/file/CommonFileList';
 import Uploader from '~/components/module/file/CommonUploader';
+import { controllBoardStore } from '~/stores/board/boardStore';
 
+const { showConfirmModal, showAlertModal } = useModal();
 const isShow = defineModel ('isShow', {
   type: Boolean,
   default: false,
@@ -10,9 +12,9 @@ const isEdit = defineModel ('isEdit', {
   type: Boolean,
   default: false,
 });
-const boardType = defineModel ('boardType', {
-  type: String,
-  default: '',
+const targetMenu = defineModel ('targetMenu', {
+  type: Object,
+  default: () => ({}),
 });
 const boardItem = defineModel ('boardItem', {
   type: Object,
@@ -26,8 +28,60 @@ const boardItem = defineModel ('boardItem', {
     deleteList: [],
   }),
 });
-const emit = defineEmits(['close', 'confirm']);
+const emit = defineEmits(['reset']);
 
+const editorReset = () => {
+  delete boardItem.value.boardId;
+  boardItem.value.title = '';
+  boardItem.value.content = '';
+  boardItem.value.useAt = false;
+  boardItem.value.attachmentData = [];
+  boardItem.value.deleteList = [];
+  boardItem.value.uploadList = [];
+  isEdit.value = false;
+};
+const rules = () => {
+  if (!boardItem.value.content) {
+    showAlertModal('입력된 컨텐츠 내용이 없습니다.');
+    return false;
+  }
+  return true;
+};
+
+const createOrUpdateData = () => {
+  if (rules() === false) return;
+  if (!isEdit.value) {
+    showConfirmModal('게시글을 작성하시겠습니까?', async () => {
+      boardItem.value.menuId = targetMenu.value.menuId;
+      await controllBoardStore().insertData(boardItem.value).then(() => {
+        if (controllBoardStore().statusCode !== 201) throw controllBoardStore().error;
+        showAlertModal(controllBoardStore().message, () => {
+          emit('reset');
+          isShow.value = false;
+        });
+      }).catch((error) => {
+        console.error('Insert menu failed:', error);
+        showAlertModal(error);
+      });
+    });
+  } else {
+    showConfirmModal('게시글을 수정하시겠습니까?', async () => {
+      console.log(boardItem.value);
+      await controllBoardStore().updateData(boardItem.value).then(() => {
+        if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
+        showAlertModal(controllBoardStore().message, () => {
+          emit('reset');
+          isShow.value = false;
+        });
+      }).catch((error) => {
+        console.error('Insert menu failed:', error);
+        showAlertModal(error);
+      });
+    });
+  }
+};
+
+// 에디터 이미지 추가
 const insertImg = () => {
   const input = document.createElement('input');
   input.type = 'file';
@@ -67,7 +121,7 @@ const board_not_null_rules = (v) => {
     v-model="isShow"
     full-width
     full-height
-    @hide="emit('close')"
+    @hide="editorReset"
   >
     <q-card>
       <q-card-section class="row justify-between items-center">
@@ -88,7 +142,7 @@ const board_not_null_rules = (v) => {
           label="제목"
         />
       </q-card-section>
-      <template v-if="boardType==='Image'">
+      <template v-if="targetMenu.boardType==='Image'">
         <q-card-section
           flat
           class="row justify-start items-center"
@@ -134,7 +188,7 @@ const board_not_null_rules = (v) => {
       >
         <q-editor
           v-model="boardItem.content"
-          :min-height="boardType==='Image'?'28rem':'36rem'"
+          :min-height="targetMenu.boardType==='Image'?'28rem':'36rem'"
           :definitions="definitions"
           :toolbar="[['left', 'center', 'right', 'justify'], ['bold', 'italic', 'underline', 'strike'], ['undo', 'redo'], ['insert_img']]"
         />
@@ -163,7 +217,7 @@ const board_not_null_rules = (v) => {
           flat
           :label="isEdit?'수정하기':'게시하기'"
           color="primary"
-          @click="emit('confirm')"
+          @click="createOrUpdateData"
         />
       </q-card-actions>
     </q-card>

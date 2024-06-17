@@ -48,13 +48,10 @@ const uploadFilesSequentially = async (files) => {
 const factoryFn = async (files) => {
   try {
     const uploadedFilesInfo = await uploadFilesSequentially(files);
-
     for (const fileInfo of uploadedFilesInfo) {
       await fileStore().insertFile(fileInfo).then(() => {
         if (fileStore().statusCode !== 201) throw fileStore().message;
-        console.log(fileStore().attachmentData);
         uploadList.value.push(fileStore().attachmentData);
-        console.log(uploadList.value);
       }).catch((error) => {
         console.error('파일 첨부에 실패하였습니다.:', error);
         showAlertModal(error);

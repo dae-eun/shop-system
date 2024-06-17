@@ -67,57 +67,6 @@ const boardItem = ref({
   uploadList: [],
 });
 
-const editorReset = () => {
-  delete boardItem.value.boardId;
-  boardItem.value.title = '';
-  boardItem.value.content = '';
-  boardItem.value.useAt = false;
-  boardItem.value.attachmentData = [];
-  boardItem.value.deleteList = [];
-  boardItem.value.uploadList = [];
-  isEdit.value = false;
-};
-const rules = () => {
-  if (!boardItem.value.content) {
-    showAlertModal('입력된 컨텐츠 내용이 없습니다.');
-    return false;
-  }
-  return true;
-};
-
-const createOrUpdateData = () => {
-  if (rules() === false) return;
-  if (!isEdit.value) {
-    showConfirmModal('게시글을 작성하시겠습니까?', async () => {
-      boardItem.value.menuId = targetMenu.value.menuId;
-      await controllBoardStore().insertData(boardItem.value).then(() => {
-        if (controllBoardStore().statusCode !== 201) throw controllBoardStore().error;
-        showAlertModal(controllBoardStore().message, async () => {
-          await getData();
-          isShow.value = false;
-        });
-      }).catch((error) => {
-        console.error('Insert menu failed:', error);
-        showAlertModal(error);
-      });
-    });
-  } else {
-    showConfirmModal('게시글을 수정하시겠습니까?', async () => {
-      console.log(boardItem.value);
-      await controllBoardStore().updateData(boardItem.value).then(() => {
-        if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
-        showAlertModal(controllBoardStore().message, async () => {
-          await getData();
-          isShow.value = false;
-        });
-      }).catch((error) => {
-        console.error('Insert menu failed:', error);
-        showAlertModal(error);
-      });
-    });
-  }
-};
-
 const getData = async () => {
   try {
     await controllBoardStore().getData(targetMenu.value.menuId).then(() => {
@@ -203,12 +152,11 @@ watchEffect(async () => {
     </q-card-section>
   </q-card>
   <BoardEditor
-    v-model:boardType="targetMenu.boardType"
+    v-model:targetMenu="targetMenu"
     v-model:isShow="isShow"
     v-model:boardItem="boardItem"
     v-model:is-edit="isEdit"
-    @confirm="createOrUpdateData"
-    @close="editorReset"
+    @reset="getData"
   />
 </template>
 
