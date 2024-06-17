@@ -10,7 +10,7 @@ const imageCardUseConfig = ref({
       label: 'arrow_back',
       btnfunction: (itemInfo) => {
         imageCardItems.value.findIndex((item, index) => {
-          if (item.imagePath === itemInfo.imagePath) {
+          if (item.filePath === itemInfo.filePath) {
             if (index === 0) return;
             const temp = imageCardItems.value[index - 1];
             imageCardItems.value[index - 1] = item;
@@ -25,7 +25,7 @@ const imageCardUseConfig = ref({
       label: 'arrow_forward',
       btnfunction: (itemInfo) => {
         imageCardItems.value.findIndex((item, index) => {
-          if (item.imagePath === itemInfo.imagePath) {
+          if (item.filePath === itemInfo.filePath) {
             if (index === imageCardItems.value.length - 1) return;
             const temp = imageCardItems.value[index + 1];
             imageCardItems.value[index + 1] = item;
@@ -53,7 +53,7 @@ const imageCardUnusedConfig = ref({
       label: 'delete',
       btnfunction: (itemInfo) => {
         imageCardItems.value.findIndex((item, index) => {
-          if (item.imagePath === itemInfo.imagePath) {
+          if (item.filePath === itemInfo.filePath) {
             imageCardItems.value.splice(index, 1);
           }
         });
@@ -71,48 +71,75 @@ const imageCardUnusedConfig = ref({
 });
 const imageCardItems = ref([
   {
-    imagePath: 'shop-sys-bucket/__.jpg',
+    filePath: 'shop-sys-bucket/__.jpg',
     title: 'title',
     useAt: true,
     sortOrdr: 1,
   },
   {
-    imagePath: 'shop-sys-bucket/__.jpg',
+    filePath: 'shop-sys-bucket/__.jpg',
     title: 'title',
     useAt: true,
     sortOrdr: 1,
   },
   {
-    imagePath: 'shop-sys-bucket/____.PNG',
+    filePath: 'shop-sys-bucket/____.PNG',
     title: 'title',
     useAt: true,
     sortOrdr: 2,
   },
   {
-    imagePath: 'shop-sys-bucket/__.jpg',
+    filePath: 'shop-sys-bucket/__.jpg',
     title: 'title',
     useAt: true,
     sortOrdr: 3,
   },
   {
-    imagePath: 'shop-sys-bucket/__.jpg',
+    filePath: 'shop-sys-bucket/__.jpg',
     title: 'title',
     useAt: false,
     sortOrdr: 3,
   },
   {
-    imagePath: 'shop-sys-bucket/__.jpg',
+    filePath: 'shop-sys-bucket/__.jpg',
     title: 'title',
     useAt: true,
     sortOrdr: 3,
   },
 ]);
+
+const isShow = ref(false);
+const thumbnailItem = ref({
+  title: '',
+});
 </script>
 
 <template>
   <q-card-section class="q-pa-lg row items-start q-gutter-md">
-    <div class="text-h5">
-      활성화 된 썸네일
+    <div class="row justify-between full-width">
+      <div class="text-h5">
+        활성화 된 썸네일
+      </div>
+      <q-btn-group
+        flat
+        class="row justify-end mB20"
+      >
+        <q-btn
+          flat
+          square
+          class="bg-primary text-white w-150"
+          @click="isShow = true"
+        >
+          썸네일 추가
+        </q-btn>
+        <q-btn
+          flat
+          square
+          class="bg-secondary text-white w-150 mL10"
+        >
+          적용
+        </q-btn>
+      </q-btn-group>
     </div>
     <q-card
       v-if="!imageCardItems.filter((item) => item.useAt).length"
@@ -129,6 +156,7 @@ const imageCardItems = ref([
     </q-card>
     <q-scroll-area
       v-else
+      :visible="true"
       class="full-width"
       style="height: 300px;"
     >
@@ -138,9 +166,10 @@ const imageCardItems = ref([
       >
         <ImageCard
           v-for="(item) in imageCardItems.filter((item) => item.useAt)"
-          :key="item.imagePath"
+          :key="item.filePath"
           v-model:imageCardConfig="imageCardUseConfig"
           :image-card-item="item"
+          style="border: 1px solid #ccc;"
         />
       </q-card>
     </q-scroll-area>
@@ -164,6 +193,7 @@ const imageCardItems = ref([
     </q-card>
     <q-scroll-area
       v-else
+      :visible="true"
       class="full-width"
       style="height: 300px;"
     >
@@ -173,13 +203,18 @@ const imageCardItems = ref([
       >
         <ImageCard
           v-for="(item) in imageCardItems.filter((item) => !item.useAt)"
-          :key="item.imagePath"
+          :key="item.filePath"
           v-model:imageCardConfig="imageCardUnusedConfig"
           :image-card-item="item"
+          style="border: 1px solid #ccc;"
         />
       </q-card>
     </q-scroll-area>
   </q-card-section>
+  <!-- <ThumbnailUploader
+    v-model:isShow="isShow"
+    v-modle:thumbnailItem="thumbnailItem"
+  /> -->
 </template>
 
 <style lang="scss" scoped>

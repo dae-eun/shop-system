@@ -21,7 +21,7 @@ const imageCardConfig = defineModel('imageCardConfig', {
   >
     <q-img
       class="auto-height"
-      :src="config.SUPABASE_IMAGES_BUCKET+props.imageCardItem.imagePath"
+      :src="config.SUPABASE_IMAGES_BUCKET+props.imageCardItem.filePath"
       :ratio="16/9"
     />
 
