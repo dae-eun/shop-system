@@ -170,12 +170,12 @@ watchEffect(() => {
               <div>
                 <q-radio
                   v-model="targetMenu.menuType"
-                  val="menu"
+                  val="Menu"
                   label="메뉴"
                 />
                 <q-radio
                   v-model="targetMenu.menuType"
-                  val="board"
+                  val="Board"
                   label="게시판"
                 />
               </div>
