@@ -42,7 +42,7 @@ const onMouseLeave = () => {
       :slides-per-view="showSwiperCnt"
       :loop="true"
       :autoplay="{
-        delay: 4000,
+        delay: 8000,
       }"
       :modules="modules"
       class="parent-div-relative"
