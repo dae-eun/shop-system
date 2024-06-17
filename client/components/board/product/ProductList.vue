@@ -1,6 +1,5 @@
 <script setup>
-import Card from '~/components/board/product/Card.vue';
-import SwiperLoopList from '~/components/module/swiper/SwiperLoopList.vue';
+// import SwiperLoopList from '~/components/module/swiper/SwiperLoopList.vue';
 
 const showSwiperCnt = ref(4);
 const swiperCard = ref([]);
@@ -15,14 +14,14 @@ for (let i = 0; i < maxSize; i++) {
   <div class="tC mT30 title">
     게시판 이름
   </div>
-  <SwiperLoopList
+  <!-- <SwiperLoopList
     v-model:swiperCard="swiperCard"
     v-model:showSwiperCnt="showSwiperCnt"
-  >
-    <template #item>
-      <Card />
-    </template>
-  </SwiperLoopList>
+  > -->
+  <!-- <template #item>
+    <Card />
+  </template> -->
+  <!-- </SwiperLoopList> -->
 </template>
 
 <style scoped>
