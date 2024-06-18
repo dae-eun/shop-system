@@ -38,7 +38,7 @@ export const controllMenuStore = defineStore('controllMenuStore', {
   actions: {
     async getData() {
       try {
-        const { statusCode, message, menuInfo } = await useFetchBase('/api/user/menu', {
+        const { statusCode, message, menuInfo } = await useFetchBase('/api/user/userMenu', {
           method: 'GET',
         }) as MenuResponse;
         this.statusCode = statusCode;

@@ -1,7 +1,7 @@
 <script setup>
 import ContentBox from '~/components/user/home/ContentBox.vue';
 import VisualImgBox from '~/components/user/home/VisualImgBox.vue';
-import { thumbStore } from '~/stores/user/thumbStore';
+import { thumbStore } from '~/stores/user/userThumbStore';
 
 const { showAlertModal } = useModal();
 

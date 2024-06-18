@@ -34,7 +34,7 @@ export const thumbStore = defineStore('thumbStore', {
   actions: {
     async getData() {
       try {
-        const { statusCode, message, thumbInfo } = await useFetchBase('/api/user/thumb', {
+        const { statusCode, message, thumbInfo } = await useFetchBase('/api/user/userThumb', {
           method: 'GET',
         }) as ThumbResponse;
         this.statusCode = statusCode;

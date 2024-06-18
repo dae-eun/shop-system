@@ -1,6 +1,6 @@
 <script setup>
 import LnbItem from '~/components/items/LnbItem.vue';
-import { controllMenuStore } from '~/stores/user/menuStore';
+import { controllMenuStore } from '~/stores/user/userMenuStore';
 
 const render = ref(false);
 const menuTree = ref([]);
