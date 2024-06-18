@@ -1,6 +1,6 @@
 <script setup>
-import ThumbnailUploader from '~/components/cms/ThumbnailUploader.vue';
-import ImageCard from '~/components/items/ImageCard.vue';
+import ThumbnailUploader from '~/components/cms/ThumbnailUploader';
+import ImageCard from '~/components/cms/items/ImageCard';
 import { thumbStore } from '~/stores/thumb/thumbStore';
 
 const { showAlertModal, showConfirmModal } = useModal();

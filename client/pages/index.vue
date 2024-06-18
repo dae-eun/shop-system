@@ -1,6 +1,6 @@
 <script setup>
-import ProductList from '~/components/board/product/ProductList.vue';
-import VisualImgBox from '~/components/layouts/VisualImgBox.vue';
+import ProductList from '~/components/user/board/product/ProductList.vue';
+import VisualImgBox from '~/components/user/home/VisualImgBox.vue';
 import { thumbStore } from '~/stores/user/thumbStore';
 
 const { showAlertModal } = useModal();
@@ -33,7 +33,7 @@ onMounted(async () => {
       />
     </div>
     <div id="container">
-      <product-list />
+      <ProductList />
     </div>
   </div>
 </template>

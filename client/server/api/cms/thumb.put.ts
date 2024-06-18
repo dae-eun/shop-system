@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   if (!body || body.length === 0) return { statusCode: 400, message: '썸네일 아이디가 없습니다.' };
 
   for (const item of body) {
-    const { data, error } = await client
+    const { error } = await client
       .from('TB_THUMBNAIL')
       .update({
         sortOrdr: item.sortOrdr,
