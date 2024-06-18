@@ -2,7 +2,7 @@
 import BoardInfoViewer from '~/components/cms/BoardInfoViewer.vue';
 import MenuController from '~/components/cms/MenuController.vue';
 import MenuInfoViewer from '~/components/cms/MenuInfoViewer.vue';
-import { controllMenuStore } from '~/stores/menu/menuStore';
+import { controllMenuStore } from '~/stores/menu/menuCmsStore';
 
 const route = useRoute();
 const splitterModel = ref(30);

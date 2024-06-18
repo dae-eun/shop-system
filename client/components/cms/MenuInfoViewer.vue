@@ -1,5 +1,5 @@
 <script setup>
-import { controllMenuStore } from '~/stores/menu/menuStore';
+import { controllMenuStore } from '~/stores/menu/menuCmsStore';
 
 const { showConfirmModal, showAlertModal } = useModal();
 
@@ -27,15 +27,16 @@ const createOrUpdateData = () => {
   if (menu_type_menu_rules() === false) return;
   showConfirmModal('저장하시겠습니까?', async () => {
     if (typeof targetMenu.value.menuId === 'string' && targetMenu.value.menuId?.includes('new')) {
-      await controllMenuStore().insertMenu(targetMenu.value).then(() => {
+      try {
+        await controllMenuStore().insertMenu(targetMenu.value);
         if (controllMenuStore().statusCode !== 201) throw controllMenuStore().error;
         showAlertModal(controllMenuStore().message, async () => {
           await resetData();
         });
-      }).catch((error) => {
+      } catch (error) {
         console.error('Insert menu failed:', error);
         showAlertModal(error);
-      });
+      };
     } else {
       try {
         await controllMenuStore().updateMenu(targetMenu.value);
@@ -57,15 +58,16 @@ const deleteData = () => {
       if (typeof targetMenu.value.menuId === 'string' && targetMenu.value.menuId?.includes('new')) {
         return await resetData();
       } else {
-        await controllMenuStore().deleteData(targetMenu.value.menuId).then(() => {
+        try {
+          await controllMenuStore().deleteData(targetMenu.value.menuId);
           if (controllMenuStore().statusCode !== 200) throw controllMenuStore().error;
           showAlertModal(controllMenuStore().message, async () => {
             return await resetData();
           });
-        }).catch((error) => {
+        } catch (error) {
           console.error('Delete menu failed:', error);
           showAlertModal(error);
-        });
+        };
       }
     });
   } catch (error) {

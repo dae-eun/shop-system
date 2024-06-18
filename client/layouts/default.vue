@@ -21,6 +21,7 @@ onMounted(() => {
         <q-toolbar-title class="text-center">
           <nuxt-link
             clickable
+            class="text-white"
             to="/"
           >
             Platform Name
@@ -38,6 +39,8 @@ onMounted(() => {
       <q-tabs
         v-if="route.path.includes('/cms')"
         align="left"
+        indicator-color="white"
+        active-color="white"
       >
         <q-route-tab
           to="/cms"

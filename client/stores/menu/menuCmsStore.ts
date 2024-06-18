@@ -95,6 +95,7 @@ export const controllMenuStore = defineStore('controllMenuStore', {
         }) as MenuResponse;
         this.statusCode = statusCode;
         this.message = message;
+        if (statusCode !== 200) throw new Error(message);
         return this.$state;
       } catch (error) {
         const err = error as SystemError;

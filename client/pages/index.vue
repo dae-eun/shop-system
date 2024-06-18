@@ -1,5 +1,5 @@
 <script setup>
-import ProductList from '~/components/user/board/product/ProductList.vue';
+import ContentBox from '~/components/user/home/ContentBox.vue';
 import VisualImgBox from '~/components/user/home/VisualImgBox.vue';
 import { thumbStore } from '~/stores/user/thumbStore';
 
@@ -18,7 +18,6 @@ const getThumbInfo = async () => {
 onMounted(async () => {
   await getThumbInfo();
 });
-// await getThumbInfo();
 </script>
 
 <template>
@@ -32,10 +31,20 @@ onMounted(async () => {
         v-model:thumbInfo="thumbInfo"
       />
     </div>
-    <div id="container">
-      <ProductList />
+
+    <div
+      id="container"
+    >
+      <ContentBox />
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .underBar {
+    border-bottom: 2px solid #e0e0e0;
+  }
+  .boardUnderBar {
+    border-bottom: 1px solid #e0e0e0;
+  }
+</style>
