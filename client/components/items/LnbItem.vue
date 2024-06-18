@@ -17,7 +17,7 @@ const selectActive = (...path) => {
     class="R0 L0 T0 B0"
     :class="[
       { active: selectActive(menu?.url) },
-      menu.level===1?'':'mL10',
+      menu.level===2?'':'mL20',
       menu.level?`depth${menu.level}`:'',
     ]"
   >
