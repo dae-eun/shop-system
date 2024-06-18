@@ -37,15 +37,16 @@ const createOrUpdateData = () => {
         showAlertModal(error);
       });
     } else {
-      await controllMenuStore().updateMenu(targetMenu.value).then(() => {
+      try {
+        await controllMenuStore().updateMenu(targetMenu.value);
         if (controllMenuStore().statusCode !== 200) throw controllMenuStore().error;
         showAlertModal(controllMenuStore().message, async () => {
           await resetData();
         });
-      }).catch((error) => {
+      } catch (error) {
         console.error('Update menu failed:', error);
         showAlertModal(error);
-      });
+      }
     }
   });
 };

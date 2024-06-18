@@ -74,14 +74,13 @@ export const controllMenuStore = defineStore('controllMenuStore', {
     },
     async updateMenu(menu: Menu) {
       try {
-        const response = await useFetchBase('/api/cms/menu', {
+        const { statusCode, message } = await useFetchBase('/api/cms/menu', {
           method: 'PUT',
           body: JSON.stringify(menu),
         }) as MenuResponse;
-
-        const { statusCode, message } = response;
         this.statusCode = statusCode;
         this.message = message;
+        if (statusCode !== 200) throw new Error(message);
         return this.$state;
       } catch (error) {
         const err = error as SystemError;

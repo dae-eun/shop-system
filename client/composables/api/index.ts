@@ -20,18 +20,16 @@ export const useFetchBase = async (url: string, options: RequestOptions): Promis
   const loadingTimeout = setTimeout(() => {
     useLoading().setLoading(true);
   }, 600);
-  return await $fetch(url, requestOptions)
-    .then((response) => {
-      if (![200, 201, 202, 204].includes(response.statusCode)) {
-        throw response.message;
-      }
-      return response;
-    })
-    .catch((error) => {
-      throw error;
-    })
-    .finally(() => {
-      clearTimeout(loadingTimeout);
-      useLoading().setLoading(false);
-    });
+  try {
+    const response = await $fetch(url, requestOptions);
+    if (![200, 201, 202, 204].includes(response.statusCode)) {
+      throw response;
+    }
+    return response;
+  } catch (error) {
+    return error;
+  } finally {
+    clearTimeout(loadingTimeout);
+    useLoading().setLoading(false);
+  }
 };

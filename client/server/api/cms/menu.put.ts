@@ -40,16 +40,18 @@ export default defineEventHandler(async (event) => {
   // 데이터 업데이트
   const updateData = {
     ...(currentData.data ? currentData.data : {}), // 기존 데이터의 모든 필드를 유지
-    menuNm: body.menuNm || currentData.data?.menuNm, // menuNm 필드 업데이트
-    upperMenuId: body.upperMenuId || currentData.data?.upperMenuId, // upperMenuId 필드 업데이트
-    level: body.level || currentData.data?.level, // level 필드 업데이트
-    url: body.url || currentData.data?.url, // url 필드 업데이트
-    menuType: body.menuType || currentData.data?.menuType, // menuType 필드 업데이트
-    pageType: body.pageType, // pageType 필드 업데이트
-    sortOrdr: body.sortOrdr || currentData.data?.sortOrdr, // sortOrdr 필드 업데이트
+    menuNm: body.menuNm,
+    upperMenuId: body.upperMenuId,
+    level: body.level,
+    url: body.url,
+    menuType: body.menuType,
+    pageType: body.pageType,
+    sortOrdr: body.sortOrdr,
     boardType: body.boardType,
-    useAt: body.useAt || currentData.data?.useAt, // useAt 필드 업데이트
+    useAt: body.useAt,
   };
+  if (!body.boardType) delete updateData.boardType;
+  if (!body.pageType) delete updateData.pageType;
 
   try {
     const { error } = await client
