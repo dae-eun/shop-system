@@ -70,7 +70,7 @@ const onMouseLeave = () => {
 
 <style scoped>
 .q-layout {
-  height: calc(100vh - 50px);
+  height: 580px;
 }
 .parent-div-relative {
   position: relative;

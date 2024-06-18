@@ -1,13 +1,5 @@
 <script setup>
 // import SwiperLoopList from '~/components/module/swiper/SwiperLoopList.vue';
-
-const showSwiperCnt = ref(4);
-const swiperCard = ref([]);
-const maxSize = 6;
-
-for (let i = 0; i < maxSize; i++) {
-  swiperCard.value.push({ i });
-}
 </script>
 
 <template>

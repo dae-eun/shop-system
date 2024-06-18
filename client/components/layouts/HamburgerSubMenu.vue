@@ -1,26 +1,36 @@
-<script setup></script>
+<script setup>
+import LnbItem from '~/components/items/LnbItem.vue';
+import { controllMenuStore } from '~/stores/user/menuStore';
+
+const render = ref(false);
+const menuTree = ref([]);
+const callMenuTree = async () => {
+  await controllMenuStore().getData().then(() => {
+    if (controllMenuStore().statusCode !== 200) throw controllMenuStore().error;
+    menuTree.value = controllMenuStore().getMenuTree?.[0].children;
+  });
+  render.value = true;
+};
+onMounted(async () => {
+  await callMenuTree();
+});
+</script>
 
 <template>
   <div>
-    <q-list bordered>
-      <q-expansion-item
-        label="가나다"
-        class="active"
-      >
-        <q-card>
-          <q-card-section> 123 </q-card-section>
-        </q-card>
-      </q-expansion-item>
-      <q-item>
-        <nuxt-link>이동</nuxt-link>
-      </q-item>
-    </q-list>
+    <LnbItem v-model:menuTree="menuTree" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.active {
-  background: #3769e7;
-  color: white;
+.q-expansion-item {
+  &.active {
+    >*{
+    }
+    .q-item__section--side > .q-icon {
+      color: white;
+      font-size: 24px;
+    }
+  }
 }
 </style>

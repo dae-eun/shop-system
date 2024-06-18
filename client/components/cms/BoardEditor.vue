@@ -72,7 +72,6 @@ const createOrUpdateData = () => {
     });
   } else {
     showConfirmModal('게시글을 수정하시겠습니까?', async () => {
-      console.log(boardItem.value);
       await controllBoardStore().updateData(boardItem.value).then(() => {
         if (controllBoardStore().statusCode !== 200) throw controllBoardStore().message;
         showAlertModal(controllBoardStore().message, () => {

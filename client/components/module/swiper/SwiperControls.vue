@@ -51,3 +51,6 @@ const toggleAutoplay = () => {
     </q-btn>
   </div>
 </template>
+
+<style lang="scss" scoped>
+</style>

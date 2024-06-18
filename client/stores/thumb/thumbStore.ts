@@ -80,7 +80,6 @@ export const thumbStore = defineStore('thumbStore', {
     },
     async updateData(thumbInfo: ThumbData) {
       try {
-        console.log(thumbInfo);
         const { statusCode, message } = await useFetchBase('/api/cms/thumb', {
           method: 'PUT',
           body: JSON.stringify(thumbInfo),
