@@ -1,13 +1,13 @@
 <script setup>
 import LnbItem from '~/components/items/LnbItem.vue';
-import { controllMenuStore } from '~/stores/user/userMenuStore';
+import { getUserMenuStore } from '~/stores/user/userMenuStore';
 
 const render = ref(false);
 const menuTree = ref([]);
 const callMenuTree = async () => {
-  await controllMenuStore().getData().then(() => {
-    if (controllMenuStore().statusCode !== 200) throw controllMenuStore().error;
-    menuTree.value = controllMenuStore().getMenuTree?.[0].children;
+  await getUserMenuStore().getData().then(() => {
+    if (getUserMenuStore().statusCode !== 200) throw getUserMenuStore().error;
+    menuTree.value = getUserMenuStore().getMenuTree?.[0].children;
   });
   render.value = true;
 };

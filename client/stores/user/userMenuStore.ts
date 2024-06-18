@@ -28,7 +28,7 @@ interface SystemError {
   message: string
 }
 
-export const controllMenuStore = defineStore('controllMenuStore', {
+export const getUserMenuStore = defineStore('getUserMenuStore', {
   state: () => ({
     menuInfo: [] as Menu[],
     statusCode: null as number | null,
@@ -45,9 +45,9 @@ export const controllMenuStore = defineStore('controllMenuStore', {
         this.message = message;
         if (statusCode === 200) {
           this.menuInfo = menuInfo || [];
-          this.menuInfo.map((el) => {
-            el.label = el.menuNm;
-            el.header = el.menuType;
+          this.menuInfo.map((menu: Menu) => {
+            menu.label = menu.menuNm;
+            menu.header = menu.menuType;
           });
         }
         return this.$state;
@@ -66,12 +66,12 @@ export const controllMenuStore = defineStore('controllMenuStore', {
       const lookup: { [key: number]: Menu } = {};
 
       // 각 메뉴 항목을 초기화하여 lookup 객체에 저장
-      state.menuInfo.forEach((menu) => {
+      state.menuInfo.forEach((menu: Menu) => {
         lookup[menu.menuId] = { ...menu };
       });
 
       // 트리 구조 형성
-      state.menuInfo.forEach((menu) => {
+      state.menuInfo.forEach((menu: Menu) => {
         if (menu.upperMenuId) {
           const upperItem = lookup[menu.upperMenuId];
           if (!upperItem.children) {

@@ -3,11 +3,19 @@ import { Autoplay, Controller } from 'swiper';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import SwiperControls from '~/components/module/swiper/SwiperControls.vue';
+import { getUserthumbStore } from '~/stores/user/userThumbStore';
 
-const thumbInfo = defineModel('thumbInfo', {
-  type: Array,
-  default: () => ([]),
-});
+const { showAlertModal } = useModal();
+
+const thumbInfo = ref([]);
+const getThumbInfo = async () => {
+  const { statusCode, message, thumbInfo: resData } = await getUserthumbStore().getData();
+  if (statusCode !== 200) {
+    console.error('데이터 조회에 실패하였습니다.:', message);
+    showAlertModal(message);
+  }
+  thumbInfo.value = resData;
+};
 
 const config = useRuntimeConfig().public;
 
@@ -34,6 +42,9 @@ const onMouseLeave = () => {
     visualSwiper.value.isAutoplayPaused = false;
   }
 };
+onMounted(async () => {
+  await getThumbInfo();
+});
 </script>
 
 <template>

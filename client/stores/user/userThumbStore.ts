@@ -24,7 +24,7 @@ interface SystemError {
   message: string
 }
 
-export const thumbStore = defineStore('thumbStore', {
+export const getUserthumbStore = defineStore('getUserthumbStore', {
   state: () => ({
     thumbInfo: [] as ThumbData[],
     statusCode: null as number | null,

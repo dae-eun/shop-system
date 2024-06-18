@@ -150,5 +150,10 @@
 </template>
 
 <style lang="scss" scoped>
-
+.underBar {
+    border-bottom: 2px solid #e0e0e0;
+  }
+  .boardUnderBar {
+    border-bottom: 1px solid #e0e0e0;
+  }
 </style>
