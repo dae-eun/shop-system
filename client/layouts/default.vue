@@ -80,7 +80,9 @@ onMounted(() => {
       <!-- drawer content -->
     </q-drawer>
 
-    <q-page-container :class="route.path.includes('/cms')?'inner':''">
+    <q-page-container
+      :class="route.path.includes('/cms') || route.path.includes('/board') ?'inner':''"
+    >
       <slot />
     </q-page-container>
 

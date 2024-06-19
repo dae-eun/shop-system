@@ -17,3 +17,13 @@ a:visited,
 a:active {
   color: #333;
 }
+caption {
+  position: absolute;
+  z-index: -10;
+  width: 0;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  text-indent: -9999px;
+  display: none;
+}

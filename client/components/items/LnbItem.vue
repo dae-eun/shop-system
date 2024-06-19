@@ -34,7 +34,7 @@ const selectActive = (...path) => {
         <q-item class="row items-center">
           <nuxt-link
             class="full-height"
-            :to="menu.url+'/'+menu.menuId"
+            :to="menu.url"
           >
             {{ menu.menuNm }}
           </nuxt-link>
