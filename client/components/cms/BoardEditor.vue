@@ -36,6 +36,7 @@ const editorReset = () => {
   boardItem.value.title = '';
   boardItem.value.content = '';
   boardItem.value.useAt = false;
+  boardItem.value.pin = false;
   boardItem.value.attachmentData = [];
   boardItem.value.deleteList = [];
   boardItem.value.uploadList = [];
