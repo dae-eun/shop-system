@@ -17,7 +17,7 @@ onMounted(() => {
 <template>
   <q-layout view="hHh lpR ffr">
     <q-header class="bg-secondary text-white">
-      <q-toolbar>
+      <q-toolbar class="relative-position">
         <q-toolbar-title class="text-center">
           <nuxt-link
             clickable
@@ -29,6 +29,7 @@ onMounted(() => {
         </q-toolbar-title>
 
         <q-btn
+          class="absolute-right"
           dense
           flat
           round
