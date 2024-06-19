@@ -1,14 +1,26 @@
 <script setup>
+import ImgCard from '~/components/user/items/ImgCard';
 
+const dayjs = useDayjs();
+
+const boardList = defineModel('boardList', {
+  type: Array,
+  default: () => [],
+});
 </script>
 
 <template>
   <div
     class="q-pa-md row items-start justify-center"
   >
-    <div class="mT30 col-12">
+    <div
+      v-for="board in boardList"
+      :key="board.id"
+      :class="board.boardType === 'Image' ? 'col-12' : 'col-6'"
+      class="mT30"
+    >
       <div class="q-pa-md tC mAuto title wd_per50 underBar text-h4 relative-position">
-        Board Name
+        {{ board.menuNm }}
         <q-btn
           flat
           icon="more_horiz"
@@ -16,135 +28,76 @@
           class="absolute-right"
         />
       </div>
-      <q-card-section>
-        <q-list
-          class="q-pa-md row items-start q-gutter-md justify-center"
-          separator
-        >
-          <q-card
-            class="my-card "
-            bordered
+      <template v-if="board.boardType==='Image'">
+        <q-card-section>
+          <q-list
+            class="q-pa-md row items-start q-gutter-md justify-center"
+            separator
           >
-            <nuxt-link to="/board/1">
-              <q-img src="" />
+            <template v-if="!board.boardInfo.length">
+              <div class="q-pa-md text-h6 row items-center">
+                <q-icon
+                  name="info"
+                  size="1.6rem"
+                />
+                등록된 게시물이 없습니다.
+              </div>
+            </template>
+            <template v-else>
+              <ImgCard
+                v-for="(item) of board.boardInfo"
+                :key="item.boardId"
+                :img-card-item="item"
+                style="width: 190px;"
+              />
+            </template>
+          </q-list>
+        </q-card-section>
+      </template>
+      <template v-else-if="board.boardType='Content'">
+        <q-card-section>
+          <q-list
+            class="q-pa-md items-start q-gutter-md"
+            separator
+          >
+            <template v-if="!board.boardInfo.length">
+              <div class="q-pa-md text-h6 row items-center">
+                <q-icon
+                  name="info"
+                  size="1.6rem"
+                />
+                등록된 게시물이 없습니다.
+              </div>
+            </template>
+            <template v-else>
+              <div
+                v-for="item of board.boardInfo"
+                :key="item.boardId"
+              >
+                <nuxt-link
+                  to="/board/1"
+                >
+                  <div class="row justify-between q-py-sm boardUnderBar">
+                    <p
+                      class="ellipsis mB0"
+                      style="max-width: 270px;"
+                    >
 
-              <q-card-section>
-                <div class="text-overline text-orange-9">
-                  Overline
-                </div>
-                <div class="text-h5 q-mt-sm q-mb-xs">
-                  Title
-                </div>
-                <div class="text-caption text-grey">
-                  Lorem ipsum dolor sit amet, consectetur
-                </div>
-              </q-card-section>
-            </nuxt-link>
-          </q-card>
-        </q-list>
-      </q-card-section>
-    </div>
-    <div class="mT30 col-6">
-      <div class="q-pa-md tC mAuto title wd_per50 underBar text-h4 relative-position">
-        Board Name
-        <q-btn
-          flat
-          icon="more_horiz"
-          size="16px"
-          class="absolute-right"
-        />
-      </div>
-      <q-card-section>
-        <q-list
-          separator
-        >
-          <nuxt-link to="/board/1">
-            <div class="row justify-between items-center q-py-sm boardUnderBar">
-              <p
-                class="ellipsis mB0"
-                style="max-width: 270px;"
-              >
-
-                걔가 그래서 어쩌고 저쩌고 그랬데 어쩌고 저쩌고 그랬데어쩌고 저쩌고 그랬데
-              </p>
-              <p
-                class="ellipsis mB0"
-                style="max-width: 72px;"
-              >
-                2024.04.05
-              </p>
-            </div>
-          </nuxt-link>
-          <nuxt-link to="/board/1">
-            <div class="row justify-between items-center q-py-sm boardUnderBar">
-              <p
-                class="ellipsis mB0"
-                style="max-width: 270px;"
-              >
-
-                걔가 그래서 어쩌고 저쩌고 그랬데 어쩌고 저쩌고 그랬데어쩌고 저쩌고 그랬데
-              </p>
-              <p
-                class="ellipsis mB0"
-                style="max-width: 72px;"
-              >
-                2024.04.05
-              </p>
-            </div>
-          </nuxt-link>
-          <nuxt-link to="/board/1">
-            <div class="row justify-between items-center q-py-sm boardUnderBar">
-              <p
-                class="ellipsis mB0"
-                style="max-width: 270px;"
-              >
-
-                걔가 그래서 어쩌고 저쩌고 그랬데 어쩌고 저쩌고 그랬데어쩌고 저쩌고 그랬데
-              </p>
-              <p
-                class="ellipsis mB0"
-                style="max-width: 72px;"
-              >
-                2024.04.05
-              </p>
-            </div>
-          </nuxt-link>
-          <nuxt-link to="/board/1">
-            <div class="row justify-between items-center q-py-sm boardUnderBar">
-              <p
-                class="ellipsis mB0"
-                style="max-width: 270px;"
-              >
-
-                걔가 그래서 어쩌고 저쩌고 그랬데 어쩌고 저쩌고 그랬데어쩌고 저쩌고 그랬데
-              </p>
-              <p
-                class="ellipsis mB0"
-                style="max-width: 72px;"
-              >
-                2024.04.05
-              </p>
-            </div>
-          </nuxt-link>
-          <nuxt-link to="/board/1">
-            <div class="row justify-between items-center q-py-sm boardUnderBar">
-              <p
-                class="ellipsis mB0"
-                style="max-width: 270px;"
-              >
-
-                걔가 그래서 어쩌고 저쩌고 그랬데 어쩌고 저쩌고 그랬데어쩌고 저쩌고 그랬데
-              </p>
-              <p
-                class="ellipsis mB0"
-                style="max-width: 72px;"
-              >
-                2024.04.05
-              </p>
-            </div>
-          </nuxt-link>
-        </q-list>
-      </q-card-section>
+                      {{ item.title }}
+                    </p>
+                    <p
+                      class="ellipsis mB0"
+                      style="max-width: 72px;"
+                    >
+                      {{ dayjs(item.regDate).format('YYYY-MM-DD') }}
+                    </p>
+                  </div>
+                </nuxt-link>
+              </div>
+            </template>
+          </q-list>
+        </q-card-section>
+      </template>
     </div>
   </div>
 </template>
