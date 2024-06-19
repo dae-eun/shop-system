@@ -147,6 +147,7 @@ watchEffect(() => {
             v-model="targetMenu.url"
             class="mT10"
             outlined
+            disable
             :rules="[menu_non_rules]"
             label="URL"
           />

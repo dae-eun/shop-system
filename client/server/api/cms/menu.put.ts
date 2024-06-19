@@ -50,6 +50,11 @@ export default defineEventHandler(async (event) => {
     boardType: body.boardType,
     useAt: body.useAt,
   };
+  if (body.menuType !== 'Menu') {
+    updateData.url = `/${body.menuType.toLocaleLowerCase()}/${body.menuId}`;
+  } else {
+    updateData.url = null;
+  }
   if (!body.boardType) delete updateData.boardType;
   if (!body.pageType) delete updateData.pageType;
 
