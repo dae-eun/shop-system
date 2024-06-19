@@ -19,6 +19,7 @@ const thumbnailItem = ref({
   size: null,
   fileUid: '',
   useAt: false,
+  pin: false,
   sortOrdr: null,
 });
 const reset = () => {
@@ -30,6 +31,7 @@ const reset = () => {
   thumbnailItem.value.size = null;
   thumbnailItem.value.fileUid = '';
   thumbnailItem.value.useAt = false;
+  thumbnailItem.value.pin = false;
   thumbnailItem.value.sortOrdr = null;
   imageFile.value = null;
   isShow.value = false;
