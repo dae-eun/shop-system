@@ -14,21 +14,22 @@ const props = defineProps({
     class="my-card "
     bordered
   >
-    <nuxt-link to="/board/1">
-      <q-img :src="config.SUPABASE_IMAGES_BUCKET+props.imgCardItem.attachment[0].filePath" />
+    <q-img
+      style="max-width: 100%; height: 15rem;"
+      :src="config.SUPABASE_IMAGES_BUCKET+props.imgCardItem.attachment[0].filePath"
+    />
 
-      <q-card-section>
-        <!-- <div class="text-overline text-orange-9">
+    <q-card-section>
+      <!-- <div class="text-overline text-orange-9">
           {{ imgCardItem }}
         </div> -->
-        <div class="text-h5 q-mt-sm q-mb-xs">
-          {{ props.imgCardItem.title }}
-        </div>
-        <div class="text-caption text-grey">
-          {{ dayjs(props.imgCardItem.regDate).format('YYYY-MM-DD') }}
-        </div>
-      </q-card-section>
-    </nuxt-link>
+      <div class="text-h5 q-mt-sm q-mb-xs">
+        {{ props.imgCardItem.title }}
+      </div>
+      <div class="text-caption text-grey text-right">
+        {{ dayjs(props.imgCardItem.regDate).format('YYYY-MM-DD') }}
+      </div>
+    </q-card-section>
   </q-card>
 </template>
 
