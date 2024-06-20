@@ -1,5 +1,9 @@
 <script setup>
-
+const dayjs = useDayjs();
+const boardInfo = defineModel('boardInfo', {
+  type: Array,
+  default: [],
+});
 </script>
 
 <template>
@@ -34,23 +38,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="text-center">
+        <tr
+          v-for="(item) of boardInfo.boardInfo"
+          :key="item.boardId"
+          class="text-center"
+        >
           <td>
-            1
+            {{ item.boardId }}
           </td>
           <td>
-            제목입니다...제목입니다...제목입니다...제목입니다...제목입니다...제목입니다...
+            {{ item.title }}
           </td>
           <td>
-            남대은
+            {{ item.writer }}
           </td>
           <td>
-            2024-01-01
+            {{ dayjs(item.regDate).format('YYYY-MM-DD') }}
           </td>
         </tr>
       </tbody>
     </q-markup-table>
-    <q-card class="q-pa-md text-center">
+    <q-card
+      v-if="!boardInfo.boardInfo.length"
+      class="q-pa-md text-center"
+    >
       <q-icon
         name="info "
         size="1.6rem"

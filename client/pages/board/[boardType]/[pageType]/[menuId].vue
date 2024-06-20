@@ -7,9 +7,11 @@ import { getUserBoardStore } from '~/stores/user/userBoardStore';
 
 const route = useRoute();
 const componentToRender = ref(null);
+const boardInfo = ref([]);
 
 onMounted(async () => {
   await getUserBoardStore().getData(route.params.menuId);
+  boardInfo.value = getUserBoardStore().getBoardInfo;
   if (route.params.boardType === 'content') {
     componentToRender.value = route.params.pageType === 'page' ? ContentPage : ContentInfinite;
   } else if (route.params.boardType === 'image') {
@@ -46,7 +48,10 @@ onMounted(async () => {
         <q-breadcrumbs-el label="게시판 제목" />
       </q-breadcrumbs>
     </div>
-    <component :is="componentToRender" />
+    <component
+      :is="componentToRender"
+      v-model:boardInfo="boardInfo"
+    />
   </div>
 </template>
 
