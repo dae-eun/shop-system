@@ -2,7 +2,6 @@
 import { getUserInfoStore } from '~/stores/auth/loginStore';
 
 const supabase = useSupabaseClient();
-
 const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) return;
@@ -17,7 +16,7 @@ const signOut = async () => {
       안녕하세요.<br>{{ getUserInfoStore().userInfo.userName }} 님
     </p>
     <ul class="menu-list">
-      <li>
+      <!-- <li>
         <a
           href="#"
           class="cart"
@@ -25,8 +24,8 @@ const signOut = async () => {
           size="18px"
           name="shop"
         /></a>
-      </li>
-      <li>
+      </li> -->
+      <li v-if="getUserInfoStore().userInfo?.auth === 'admin'">
         <nuxt-link
           to="/cms"
           class="settings"

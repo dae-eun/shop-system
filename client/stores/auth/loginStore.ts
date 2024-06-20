@@ -7,6 +7,7 @@ interface User {
   postNum: string
   addr1: string
   addr2: string
+  auth: string
 }
 interface UserCheckResponse {
   statusCode: number
