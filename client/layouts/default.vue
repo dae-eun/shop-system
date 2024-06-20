@@ -24,7 +24,7 @@ onMounted(() => {
             class="text-white"
             to="/"
           >
-            Platform Name
+            BIGGATE
           </nuxt-link>
         </q-toolbar-title>
 
@@ -40,28 +40,34 @@ onMounted(() => {
       <q-tabs
         v-if="route.path.includes('/cms')"
         align="left"
-        indicator-color="white"
-        active-color="white"
+        class="text-white"
+        indicator-color="yellow"
+        active-color="yellow"
       >
         <q-route-tab
           to="/cms"
           label="home"
+          class="text-white"
         />
         <q-route-tab
           to="/cms/contentManage/thumbnail"
           label="thumbnail"
+          class="text-white"
         />
         <q-route-tab
           to="/cms/contentManage/menu"
           label="menu"
+          class="text-white"
         />
         <q-route-tab
           to="/cms/contentManage/board"
           label="board"
+          class="text-white"
         />
         <q-route-tab
           to="/cms/order"
           label="order"
+          class="text-white"
         />
       </q-tabs>
     </q-header>
