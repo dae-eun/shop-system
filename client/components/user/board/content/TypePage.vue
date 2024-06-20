@@ -15,6 +15,7 @@ const query = defineModel('query', {
 });
 const props = defineProps({
   getData: Function,
+  callDialog: Function,
 });
 </script>
 
@@ -34,7 +35,10 @@ const props = defineProps({
         <col style="width: 20%">
       </colgroup>
       <thead class="bg-teal">
-        <tr class="text-center text-white">
+        <tr
+          class="text-center text-white "
+          clickable
+        >
           <th>
             번호
           </th>
@@ -53,7 +57,8 @@ const props = defineProps({
         <tr
           v-for="(item) of boardInfo"
           :key="item.boardId"
-          class="text-center"
+          class="text-center cursor-pointer"
+          @click="props.callDialog(item.boardId)"
         >
           <td>
             {{ item.boardId }}

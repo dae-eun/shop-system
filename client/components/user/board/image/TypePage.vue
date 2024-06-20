@@ -16,6 +16,7 @@ const query = defineModel('query', {
 });
 const props = defineProps({
   getData: Function,
+  callDialog: Function,
 });
 </script>
 
@@ -24,9 +25,10 @@ const props = defineProps({
     <ImgCard
       v-for="(item) of boardInfo"
       :key="item.boardId"
-      class="q-ma-md"
+      class="q-ma-md cursor-pointer"
       :img-card-item="item"
       style="width: 280px;"
+      @click="props.callDialog(item.boardId)"
     />
   </q-card-section>
   <q-pagination

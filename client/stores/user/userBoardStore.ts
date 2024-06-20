@@ -8,6 +8,7 @@ interface SystemError {
 export const getUserBoardStore = defineStore('getUserBoardStore', {
   state: () => ({
     boardInfo: [],
+    menuInfo: [],
     statusCode: null,
     message: '',
     error: '',
@@ -15,7 +16,7 @@ export const getUserBoardStore = defineStore('getUserBoardStore', {
   actions: {
     async getData(query) {
       try {
-        const { statusCode, message, boardInfo } = await useFetchBase('/api/user/userBoard', {
+        const { statusCode, message, boardInfo, menuInfo } = await useFetchBase('/api/user/userBoard', {
           method: 'GET',
           query,
         });
@@ -23,6 +24,7 @@ export const getUserBoardStore = defineStore('getUserBoardStore', {
         this.message = message;
         if (statusCode === 200) {
           this.boardInfo = boardInfo || [];
+          this.menuInfo = menuInfo || [];
         }
         return this.$state;
       } catch (error) {
@@ -34,6 +36,9 @@ export const getUserBoardStore = defineStore('getUserBoardStore', {
   getters: {
     getBoardInfo() {
       return this.boardInfo;
+    },
+    getMenuInfo() {
+      return this.menuInfo;
     },
   },
 });

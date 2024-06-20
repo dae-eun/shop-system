@@ -1,14 +1,18 @@
 <script setup>
 import ContentInfinite from '~/components/user/board/content/TypeInfinite';
 import ContentPage from '~/components/user/board/content/TypePage';
+import ContentDialog from '~/components/user/board/dialog/BoardContent';
+import ImageDialog from '~/components/user/board/dialog/BoardImage';
 import ImageInfinite from '~/components/user/board/image/TypeInfinite';
 import ImagePage from '~/components/user/board/image/TypePage';
 import { getUserBoardStore } from '~/stores/user/userBoardStore';
 
 const route = useRoute();
 const componentToRender = shallowRef(null);
+const componentDialogToRender = shallowRef(null);
 const isLoaded = ref(false);
 const boardInfo = ref([]);
+const menuInfo = ref({});
 
 const query = ref({
   menuId: route.params.menuId,
@@ -19,13 +23,27 @@ const query = ref({
 const getData = async () => {
   await getUserBoardStore().getData(query.value);
   boardInfo.value = getUserBoardStore().getBoardInfo;
+  menuInfo.value = getUserBoardStore().getMenuInfo;
 };
 
 if (route.params.boardType === 'content') {
   componentToRender.value = route.params.pageType === 'page' ? markRaw(ContentPage) : markRaw(ContentInfinite);
+  componentDialogToRender.value = markRaw(ContentDialog);
 } else if (route.params.boardType === 'image') {
   componentToRender.value = route.params.pageType === 'page' ? markRaw(ImagePage) : markRaw(ImageInfinite);
+  componentDialogToRender.value = markRaw(ImageDialog);
 }
+
+const isShow = ref(false);
+const selectItem = ref(null);
+const callDialog = (id) => {
+  selectItem.value = boardInfo.value.boardInfo.find(item => item.boardId === id);
+  isShow.value = true;
+};
+const modalReset = () => {
+  selectItem.value = null;
+  isShow.value = false;
+};
 onMounted(async () => {
   await getData();
   query.value.max = Math.floor(getUserBoardStore().boardInfo.count / query.value.pageSize + 1);
@@ -39,7 +57,7 @@ onMounted(async () => {
     <div class="title-area mT50">
       <q-card-section class="row justify-center">
         <div class="text-h4">
-          게시판 제목
+          {{ menuInfo.menuNm }}
         </div>
       </q-card-section>
 
@@ -59,7 +77,7 @@ onMounted(async () => {
             size="1.5rem"
           />
         </q-breadcrumbs-el>
-        <q-breadcrumbs-el label="게시판 제목" />
+        <q-breadcrumbs-el :label="menuInfo.menuNm" />
       </q-breadcrumbs>
     </div>
     <component
@@ -67,7 +85,15 @@ onMounted(async () => {
       v-if="isLoaded"
       v-model:boardInfo="boardInfo.boardInfo"
       v-model:query="query"
+      :call-dialog="callDialog"
       :get-data="getData"
+    />
+    <component
+      :is="componentDialogToRender"
+      v-if="isLoaded"
+      v-model:selectItem="selectItem"
+      v-model:isShow="isShow"
+      :modal-reset="modalReset"
     />
   </div>
 </template>

@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await client
     .from('TB_MENU')
-    .select('boardType, pageType, url')
+    .select('boardType, pageType, url, menuNm')
     .eq('menuId', query.menuId);
 
   const pageSize = query.pageSize || 10;
