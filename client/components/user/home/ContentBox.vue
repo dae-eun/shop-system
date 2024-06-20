@@ -26,6 +26,7 @@ const boardList = defineModel('boardList', {
           icon="more_horiz"
           size="16px"
           class="absolute-right"
+          @click="navigateTo(board.url)"
         />
       </div>
       <template v-if="board.boardType==='Image'">

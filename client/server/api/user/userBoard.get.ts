@@ -1,11 +1,8 @@
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseClient } from '#supabase/server';
 
 export default defineEventHandler(async (event) => {
-  const user = await serverSupabaseUser(event);
   const client = await serverSupabaseClient(event);
   const query = getQuery(event);
-
-  if (!user) return { statusCode: 401, message: 'Authentication required' };
 
   if (!query.menuId) {
     return { statusCode: 400, message: 'Invalid menuId' };

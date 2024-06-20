@@ -1,10 +1,7 @@
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseClient } from '#supabase/server';
 
 export default defineEventHandler(async (event) => {
-  const user = await serverSupabaseUser(event);
   const client = await serverSupabaseClient(event);
-
-  if (!user) return { statusCode: 401, message: 'Authentication required' };
 
   const { data: thumbInfo, error: thumbError } = await client
     .from('TB_THUMBNAIL')
