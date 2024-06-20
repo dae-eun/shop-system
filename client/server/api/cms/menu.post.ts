@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
   if (insertData.menuType !== 'Menu') {
     if (data && data[0]) {
       const updateData = {
-        url: `/${insertData.menuType.toLocaleLowerCase()}/${insertData.pageType?.toLocaleLowerCase()}/${data[0].menuId}`,
+        url: `/${insertData.menuType.toLocaleLowerCase()}/${insertData.boardType?.toLocaleLowerCase()}/${insertData.pageType?.toLocaleLowerCase()}/${data[0].menuId}`,
       };
       const { error } = await client
         .from('TB_MENU')

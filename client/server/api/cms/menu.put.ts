@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
     useAt: body.useAt,
   };
   if (body.menuType !== 'Menu') {
-    updateData.url = `/${body.menuType.toLocaleLowerCase()}/${body.pageType.toLocaleLowerCase()}/${body.menuId}`;
+    updateData.url = `/${body.menuType.toLocaleLowerCase()}/${body.boardType.toLocaleLowerCase()}/${body.pageType.toLocaleLowerCase()}/${body.menuId}`;
   } else {
     updateData.url = null;
   }
