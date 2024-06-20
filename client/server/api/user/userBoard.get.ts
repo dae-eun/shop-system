@@ -16,10 +16,16 @@ export default defineEventHandler(async (event) => {
     .select('boardType, pageType, url')
     .eq('menuId', query.menuId);
 
+  const pageSize = query.pageSize || 10;
+  const page = query.page || 1;
+  const start = (page - 1) * pageSize;
+
   const { data: boardInfo, error: boardError, count } = await client
     .from('TB_BOARD')
     .select('*, attachment:TB_ATTACHMENT(filePath)', { count: 'exact' })
-    .eq('menuId', query.menuId);
+    .eq('menuId', query.menuId)
+    .range(start, start + pageSize - 1)
+    .order('regDate', { ascending: false });
 
   if (error || boardError) {
     console.error('Error fetching menu:', error);
