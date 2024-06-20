@@ -4,6 +4,18 @@ const boardInfo = defineModel('boardInfo', {
   type: Array,
   default: [],
 });
+const query = defineModel('query', {
+  type: Object,
+  default: () => {
+    return {
+      page: 1,
+      pageSize: 8,
+    };
+  },
+});
+const props = defineProps({
+  getData: Function,
+});
 </script>
 
 <template>
@@ -39,7 +51,7 @@ const boardInfo = defineModel('boardInfo', {
       </thead>
       <tbody>
         <tr
-          v-for="(item) of boardInfo.boardInfo"
+          v-for="(item) of boardInfo"
           :key="item.boardId"
           class="text-center"
         >
@@ -59,7 +71,7 @@ const boardInfo = defineModel('boardInfo', {
       </tbody>
     </q-markup-table>
     <q-card
-      v-if="!boardInfo.boardInfo.length"
+      v-if="!boardInfo.length"
       class="q-pa-md text-center"
     >
       <q-icon
@@ -69,16 +81,17 @@ const boardInfo = defineModel('boardInfo', {
       작성된 게시글이 없습니다.
     </q-card>
     <q-pagination
-      v-model="current"
+      v-model="query.page"
       class="justify-center mT40 default-pagi"
       boundary-links
-      max="100"
-      max-pages="10"
+      :max="query.max"
+      :max-pages="query.pageSize"
       direction-links
       flat
       color="grey"
       active-color="primary"
       :boundary-numbers="false"
+      @update:model-value="props.getData()"
     />
   </div>
 </template>

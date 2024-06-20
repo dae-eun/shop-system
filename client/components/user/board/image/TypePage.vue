@@ -5,12 +5,24 @@ const boardInfo = defineModel('boardInfo', {
   type: Array,
   default: [],
 });
+const query = defineModel('query', {
+  type: Object,
+  default: () => {
+    return {
+      page: 1,
+      pageSize: 8,
+    };
+  },
+});
+const props = defineProps({
+  getData: Function,
+});
 </script>
 
 <template>
   <q-card-section class="row justify-start">
     <ImgCard
-      v-for="(item) of boardInfo.boardInfo"
+      v-for="(item) of boardInfo"
       :key="item.boardId"
       class="q-ma-md"
       :img-card-item="item"
@@ -18,16 +30,17 @@ const boardInfo = defineModel('boardInfo', {
     />
   </q-card-section>
   <q-pagination
-    v-model="current"
+    v-model="query.page"
     class="justify-center mT40 default-pagi"
     boundary-links
-    max="100"
-    max-pages="10"
+    :max="query.max"
+    :max-pages="query.pageSize"
     direction-links
     flat
     color="grey"
     active-color="primary"
     :boundary-numbers="false"
+    @update:model-value="props.getData()"
   />
 </template>
 
