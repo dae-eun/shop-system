@@ -6,17 +6,31 @@ import ImagePage from '~/components/user/board/image/TypePage';
 import { getUserBoardStore } from '~/stores/user/userBoardStore';
 
 const route = useRoute();
-const componentToRender = ref(null);
+const componentToRender = shallowRef(null);
+const isLoaded = ref(false);
 const boardInfo = ref([]);
 
-onMounted(async () => {
-  await getUserBoardStore().getData(route.params.menuId);
+const query = ref({
+  menuId: route.params.menuId,
+  page: 1,
+  pageSize: route.params.boardType === 'content' ? 10 : 8,
+  max: 10,
+});
+const getData = async () => {
+  await getUserBoardStore().getData(query.value);
   boardInfo.value = getUserBoardStore().getBoardInfo;
-  if (route.params.boardType === 'content') {
-    componentToRender.value = route.params.pageType === 'page' ? ContentPage : ContentInfinite;
-  } else if (route.params.boardType === 'image') {
-    componentToRender.value = route.params.pageType === 'page' ? ImagePage : ImageInfinite;
-  }
+};
+
+if (route.params.boardType === 'content') {
+  componentToRender.value = route.params.pageType === 'page' ? markRaw(ContentPage) : markRaw(ContentInfinite);
+} else if (route.params.boardType === 'image') {
+  componentToRender.value = route.params.pageType === 'page' ? markRaw(ImagePage) : markRaw(ImageInfinite);
+}
+onMounted(async () => {
+  await getData();
+  query.value.max = Math.floor(getUserBoardStore().boardInfo.count / query.value.pageSize + 1);
+
+  isLoaded.value = true;
 });
 </script>
 
@@ -50,7 +64,10 @@ onMounted(async () => {
     </div>
     <component
       :is="componentToRender"
-      v-model:boardInfo="boardInfo"
+      v-if="isLoaded"
+      v-model:boardInfo="boardInfo.boardInfo"
+      v-model:query="query"
+      :get-data="getData"
     />
   </div>
 </template>

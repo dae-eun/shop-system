@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
 import { useFetchBase } from '~/composables/api/index';
 
+interface SystemError {
+  code: String
+  message: String
+}
 export const getUserBoardStore = defineStore('getUserBoardStore', {
   state: () => ({
     boardInfo: [],
@@ -11,8 +15,9 @@ export const getUserBoardStore = defineStore('getUserBoardStore', {
   actions: {
     async getData(query) {
       try {
-        const { statusCode, message, boardInfo } = await useFetchBase(`/api/user/userBoard?menuId=${query}`, {
+        const { statusCode, message, boardInfo } = await useFetchBase('/api/user/userBoard', {
           method: 'GET',
+          query,
         });
         this.statusCode = statusCode;
         this.message = message;
