@@ -33,7 +33,6 @@ export default defineEventHandler(async (event) => {
     console.error('Error adding menu:', error);
     return { statusCode: 500, message: 'Internal Server Error' };
   } else {
-    console.log(data);
     return { statusCode: 201, message: '파일을 추가하였습니다.', attachmentData: data[0] };
   }
 });

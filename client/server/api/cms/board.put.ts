@@ -79,10 +79,8 @@ export default defineEventHandler(async (event) => {
 
   // deleteList가 있을 경우
   const deleteList = body.deleteList;
-  console.log(deleteList);
   if (deleteList && deleteList.length > 0) {
     for (const deleteFile of deleteList) {
-      console.log(deleteFile.fileUid);
       const { error } = await client
         .from('TB_ATTACHMENT')
         .update({ boardId: null })

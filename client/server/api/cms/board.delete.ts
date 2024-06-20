@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
       .eq('boardId', boardId)
       .single();
 
-    console.log(data);
     if (error) throw error;
 
     return { statusCode: 200, message: '게시글을 삭제했습니다.' };
