@@ -37,19 +37,24 @@ export default defineEventHandler(async (event) => {
     .select('menuId');
 
   if (insertData.menuType !== 'Menu') {
-    const updateData = {
-      url: `/${insertData.menuType.toLocaleLowerCase()}/${insertData.pageType?.toLocaleLowerCase()}/${data[0].menuId}`,
-    };
-    const { error } = await client
-      .from('TB_MENU')
-      .update(updateData as never)
-      .eq('menuId', data[0].menuId);
+    if (data && data[0]) {
+      const updateData = {
+        url: `/${insertData.menuType.toLocaleLowerCase()}/${insertData.pageType?.toLocaleLowerCase()}/${data[0].menuId}`,
+      };
+      const { error } = await client
+        .from('TB_MENU')
+        .update(updateData as never)
+        .eq('menuId', data[0].menuId);
 
-    if (error) {
-      console.error('Error adding menu:', error);
-      return { statusCode: 500, message: 'Internal Server Error' };
+      if (error) {
+        console.error('Error adding menu:', error);
+        return { statusCode: 500, message: 'Internal Server Error' };
+      } else {
+        return { statusCode: 201, message: '메뉴를 추가하였습니다.' };
+      }
     } else {
-      return { statusCode: 201, message: '메뉴를 추가하였습니다.' };
+      console.error('Error adding menu: Data is null');
+      return { statusCode: 500, message: 'Internal Server Error' };
     }
   }
 

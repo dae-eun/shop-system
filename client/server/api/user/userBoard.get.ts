@@ -7,6 +7,10 @@ export default defineEventHandler(async (event) => {
 
   if (!user) return { statusCode: 401, message: 'Authentication required' };
 
+  if (!query.menuId) {
+    return { statusCode: 400, message: 'Invalid menuId' };
+  }
+
   const { data, error } = await client
     .from('TB_MENU')
     .select('boardType, pageType, url')
