@@ -57,6 +57,7 @@ const onMouseLeave = () => {
         <q-img
           class="q-layout"
           :src="config.SUPABASE_IMAGES_BUCKET+slide.filePath"
+          :alt="slide.title"
         />
       </SwiperSlide>
       <SwiperControls

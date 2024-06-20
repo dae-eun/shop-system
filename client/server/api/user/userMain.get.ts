@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const { data: thumbInfo, error: thumbError } = await client
     .from('TB_THUMBNAIL')
-    .select('*')
+    .select('filePath, title')
     .filter('useAt', 'eq', true)
     .order('sortOrdr', { ascending: true });
 

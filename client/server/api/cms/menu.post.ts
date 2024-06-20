@@ -6,9 +6,9 @@ interface MenuData {
   level: Number
   url: String | null
   menuType: String
-  pageType: String | null
+  pageType?: String | null
   sortOrdr: String
-  boardType: String
+  boardType?: String
   useAt: Boolean
 };
 export default defineEventHandler(async (event) => {
@@ -28,8 +28,8 @@ export default defineEventHandler(async (event) => {
     useAt: body.useAt,
   };
 
-  if (body.boardType) Object.assign(insertData, { boardType: body.boardType });
-  if (body.pageType) Object.assign(insertData, { pageType: body.pageType });
+  if (insertData.menuType !== 'Menu' && body.boardType) Object.assign(insertData, { boardType: body.boardType });
+  if (insertData.menuType !== 'Menu' && body.pageType) Object.assign(insertData, { pageType: body.pageType });
 
   const { data, error } = await client
     .from('TB_MENU')
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
 
   if (insertData.menuType !== 'Menu') {
     const updateData = {
-      url: `/${insertData.menuType.toLocaleLowerCase()}/${data[0].menuId}`,
+      url: `/${insertData.menuType.toLocaleLowerCase()}/${insertData.pageType?.toLocaleLowerCase()}/${data[0].menuId}`,
     };
     const { error } = await client
       .from('TB_MENU')

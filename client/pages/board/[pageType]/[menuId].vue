@@ -1,5 +1,8 @@
 <script setup>
+import { getUserBoardStore } from '~/stores/user/userBoardStore';
 
+const route = useRoute();
+await getUserBoardStore().getData(route.params.menuId);
 </script>
 
 <template>
