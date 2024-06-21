@@ -54,7 +54,7 @@ const addTreeItem = () => {
   <div>
     <q-btn
       class="btn-border"
-      :disable="(!targetMenu.level && targetMenu.level !== 0)"
+      :disable="!targetMenu.level && targetMenu.level !== 0 || targetMenu.menuType!=='Menu'"
       square
       flat
       @click="addTreeItem"
