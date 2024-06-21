@@ -119,7 +119,8 @@ const addImg = () => {
 };
 const insertImg = () => {
   const { width, height, url, imgData } = imageInfo.value;
-  boardItem.value.content += `<div><a href="${url}"><img src="${imgData}" style="width:${width}; height:${height};" /></a></div>`;
+  if (!url) boardItem.value.content += `<div><img src="${imgData}" style="width:${width}; height:${height};" /></div>`;
+  else boardItem.value.content += `<div><a href="${url}"><img src="${imgData}" style="width:${width}; height:${height};" /></a></div>`;
   isimgOptModal.value = false;
 };
 const resetImg = () => {
