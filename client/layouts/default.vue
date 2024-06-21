@@ -64,11 +64,11 @@ onMounted(() => {
           label="board"
           class="text-white"
         />
-        <q-route-tab
+        <!-- <q-route-tab
           to="/cms/order"
           label="order"
           class="text-white"
-        />
+        /> -->
       </q-tabs>
     </q-header>
 
