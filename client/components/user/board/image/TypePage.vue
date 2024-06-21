@@ -31,6 +31,17 @@ const props = defineProps({
       @click="props.callDialog(item.boardId)"
     />
   </q-card-section>
+  <q-card
+    v-if="!boardInfo.length"
+    flat
+    class="q-pa-md text-center"
+  >
+    <q-icon
+      name="info "
+      size="1.6rem"
+    />
+    작성된 게시글이 없습니다.
+  </q-card>
   <q-pagination
     v-model="query.page"
     class="justify-center mT40 default-pagi"
