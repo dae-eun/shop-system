@@ -171,6 +171,7 @@ const board_not_null_rules = (v) => {
       </q-card-section>
       <template v-if="targetMenu.boardType==='Image'">
         <q-card-section
+          v-if="boardItem.attachmentData.length"
           flat
           class="row justify-start items-center"
         >
