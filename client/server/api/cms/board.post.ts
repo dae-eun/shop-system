@@ -7,6 +7,7 @@ interface BoardData {
   writer: String
   editor: String
   useAt: Boolean
+  pin: Boolean
   attachmentData?: JSON
 };
 
@@ -33,6 +34,7 @@ export default defineEventHandler(async (event) => {
     writer: userData[0].userName,
     editor: userData[0].userName,
     useAt: body.useAt,
+    pin: body.pin,
   };
 
   const { data, error } = await client
