@@ -98,9 +98,29 @@ onMounted(() => {
       class="bg-grey-8 text-white"
     >
       <q-toolbar>
-        <q-toolbar-title>
-          <div>작업 중...</div>
-        </q-toolbar-title>
+        <q-card-section>
+          <div class="text-weight-thin mB5">
+            제작 : Biggate
+          </div>
+          <div class="text-weight-thin mB5">
+            Github :
+            <nuxt-link
+              to="https://github.com/dae-eun"
+              class="text-white"
+            >
+              https://github.com/dae-eun
+            </nuxt-link>
+          </div>
+          <div class="text-weight-thin mB5">
+            OpenKakao :
+            <nuxt-link
+              to="https://open.kakao.com/o/sCLU5xwg"
+              class="text-white"
+            >
+              메세지하기
+            </nuxt-link>
+          </div>
+        </q-card-section>
       </q-toolbar>
     </q-footer>
   </q-layout>
