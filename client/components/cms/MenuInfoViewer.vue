@@ -1,5 +1,6 @@
 <script setup>
 import { controllMenuStore } from '~/stores/menu/menuCmsStore';
+import { getUserMenuStore } from '~/stores/user/userMenuStore';
 
 const { showConfirmModal, showAlertModal } = useModal();
 
@@ -49,6 +50,7 @@ const createOrUpdateData = () => {
         showAlertModal(error);
       }
     }
+    await getUserMenuStore().getData();
   });
 };
 

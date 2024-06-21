@@ -8,9 +8,12 @@ const callMenuTree = () => {
   menuTree.value = getUserMenuStore().getMenuTree?.[0].children;
   render.value = true;
 };
-onMounted(() => {
-  callMenuTree();
-});
+const updateMenuTree = () => {
+  menuTree.value = getUserMenuStore().getMenuTree?.[0].children;
+};
+
+callMenuTree();
+watch(() => getUserMenuStore().menuInfo, updateMenuTree);
 </script>
 
 <template>

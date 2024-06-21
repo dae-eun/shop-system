@@ -85,33 +85,5 @@ export const getUserMenuStore = defineStore('getUserMenuStore', {
 
       return tree;
     },
-    // getMenuMainContent(state) {
-    //   const arr = state.menuInfo.filter((menu: Menu) => menu.menuType === 'Board');
-    //   const result = [];
-    //   const typeContent = arr.filter((menu: Menu) => menu.boardType === 'Content');
-    //   const typeOther = arr.filter((menu: Menu) => menu.boardType !== 'Content');
-    //   if (!typeContent.length || !typeOther.length) return arr;
-
-    //   let contentQueue: Menu[] = [];
-    //   for (let i = 0; i < arr.length; i++) {
-    //     if (arr[i].boardType === 'Content') {
-    //       if (contentQueue.length < 2) {
-    //         contentQueue.push(arr[i]);
-    //       }
-    //       if (contentQueue.length >= 2) {
-    //         result.push(...contentQueue);
-    //         contentQueue = [];
-    //       }
-    //     } else if (arr[i].boardType !== 'Content') {
-    //       result.push(arr[i]);
-    //     }
-    //   }
-
-    //   if (contentQueue.length > 0) {
-    //     result.push(...contentQueue);
-    //   }
-
-    //   return result;
-    // },
   },
 });
