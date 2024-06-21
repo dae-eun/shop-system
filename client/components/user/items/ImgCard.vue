@@ -23,7 +23,7 @@ const props = defineProps({
       <!-- <div class="text-overline text-orange-9">
           {{ imgCardItem }}
         </div> -->
-      <div class="text-h5 q-mt-sm q-mb-xs">
+      <div class="text-h5 q-mt-sm q-mb-xs ellipsis">
         {{ props.imgCardItem.title }}
       </div>
       <div class="text-caption text-grey text-right">
