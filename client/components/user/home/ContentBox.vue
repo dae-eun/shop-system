@@ -1,12 +1,36 @@
 <script setup>
+import ContentDialog from '~/components/user/board/dialog/BoardContent';
+import ImageDialog from '~/components/user/board/dialog/BoardImage';
 import ImgCard from '~/components/user/items/ImgCard';
+import { getUserBoardDetailStore } from '~/stores/user/userBoardDetailStore';
 
 const dayjs = useDayjs();
-
 const boardList = defineModel('boardList', {
   type: Array,
   default: () => [],
 });
+
+const componentDialog = ref(null);
+const isShow = ref(false);
+const selectItem = ref(null);
+const modalReset = () => {
+  componentDialog.value = null;
+  selectItem.value = null;
+  isShow.value = false;
+};
+const callDialog = async (id, type) => {
+  const query = {
+    boardId: id,
+  };
+  await getUserBoardDetailStore().getDetailData(query);
+  if (type === 'Image') {
+    componentDialog.value = ImageDialog;
+  } else {
+    componentDialog.value = ContentDialog;
+  }
+  selectItem.value = getUserBoardDetailStore().getBoardDetailInfo;
+  isShow.value = true;
+};
 </script>
 
 <template>
@@ -50,6 +74,7 @@ const boardList = defineModel('boardList', {
                 :key="item.boardId"
                 :img-card-item="item"
                 style="width: 190px;"
+                @click="callDialog(item.boardId, board.boardType)"
               />
             </template>
           </q-list>
@@ -60,6 +85,7 @@ const boardList = defineModel('boardList', {
           <q-list
             class="q-pa-md items-start q-gutter-md"
             separator
+            @click="callDialog(board.boardInfo.boardId, board.boardInfo.boardType)"
           >
             <template v-if="!board.boardInfo.length">
               <div class="q-pa-md text-h6 row items-center">
@@ -100,6 +126,12 @@ const boardList = defineModel('boardList', {
         </q-card-section>
       </template>
     </div>
+    <component
+      :is="componentDialog"
+      v-model:isShow="isShow"
+      :select-item="selectItem"
+      :modal-reset="modalReset"
+    />
   </div>
 </template>
 

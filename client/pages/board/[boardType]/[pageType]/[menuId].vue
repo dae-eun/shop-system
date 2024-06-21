@@ -5,6 +5,7 @@ import ContentDialog from '~/components/user/board/dialog/BoardContent';
 import ImageDialog from '~/components/user/board/dialog/BoardImage';
 import ImageInfinite from '~/components/user/board/image/TypeInfinite';
 import ImagePage from '~/components/user/board/image/TypePage';
+import { getUserBoardDetailStore } from '~/stores/user/userBoardDetailStore';
 import { getUserBoardStore } from '~/stores/user/userBoardStore';
 
 const route = useRoute();
@@ -36,8 +37,12 @@ if (route.params.boardType === 'content') {
 
 const isShow = ref(false);
 const selectItem = ref(null);
-const callDialog = (id) => {
-  selectItem.value = boardInfo.value.boardInfo.find(item => item.boardId === id);
+const callDialog = async (id) => {
+  const query = {
+    boardId: id,
+  };
+  await getUserBoardDetailStore().getDetailData(query);
+  selectItem.value = getUserBoardDetailStore().getBoardDetailInfo;
   isShow.value = true;
 };
 const modalReset = () => {

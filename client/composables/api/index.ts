@@ -1,6 +1,6 @@
 import { useLoading } from '~/stores/common/isLoading';
 
-interface RequestOptions {
+export interface RequestOptions {
   method: string
   headers?: {
     'Content-Type': string

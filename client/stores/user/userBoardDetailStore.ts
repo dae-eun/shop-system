@@ -3,35 +3,30 @@ import type { RequestOptions } from '~/composables/api/index';
 import { useFetchBase } from '~/composables/api/index';
 
 interface SystemError {
-  code: String
-  message: String
+  code: string
+  message: string
 }
 interface QueryData {
-  menuId: number
   boardId: number
-  pageSize: number
-  page: number
 }
-export const getUserBoardStore = defineStore('getUserBoardStore', {
+export const getUserBoardDetailStore = defineStore('getUserBoardDetailStore', {
   state: () => ({
-    boardInfo: [],
-    menuInfo: [],
+    boardInfo: {},
     statusCode: null,
     message: '',
     error: '',
   }),
   actions: {
-    async getData(query: QueryData) {
+    async getDetailData(query: QueryData) {
       try {
-        const { statusCode, message, boardInfo, menuInfo } = await useFetchBase('/api/user/userBoard', {
+        const { statusCode, message, boardInfo } = await useFetchBase('/api/user/userBoard', {
           method: 'GET',
           query,
-        } as RequestOptions); // Add 'as RequestOptions' to specify the type
+        } as RequestOptions);
         this.statusCode = statusCode;
         this.message = message;
         if (statusCode === 200) {
-          this.boardInfo = boardInfo || [];
-          this.menuInfo = menuInfo || [];
+          this.boardInfo = boardInfo || {};
         }
         return this.$state;
       } catch (error) {
@@ -41,11 +36,8 @@ export const getUserBoardStore = defineStore('getUserBoardStore', {
     },
   },
   getters: {
-    getBoardInfo() {
+    getBoardDetailInfo(): any {
       return this.boardInfo;
-    },
-    getMenuInfo() {
-      return this.menuInfo;
     },
   },
 });
