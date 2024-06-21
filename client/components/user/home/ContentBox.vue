@@ -24,9 +24,9 @@ const callDialog = async (id, type) => {
   };
   await getUserBoardDetailStore().getDetailData(query);
   if (type === 'Image') {
-    componentDialog.value = ImageDialog;
+    componentDialog.value = markRaw(ImageDialog);
   } else {
-    componentDialog.value = ContentDialog;
+    componentDialog.value = markRaw(ContentDialog);
   }
   selectItem.value = getUserBoardDetailStore().getBoardDetailInfo;
   isShow.value = true;
@@ -74,6 +74,7 @@ const callDialog = async (id, type) => {
                 :key="item.boardId"
                 :img-card-item="item"
                 style="width: 190px;"
+                class="cursor-pointer"
                 @click="callDialog(item.boardId, board.boardType)"
               />
             </template>
@@ -85,7 +86,6 @@ const callDialog = async (id, type) => {
           <q-list
             class="q-pa-md items-start q-gutter-md"
             separator
-            @click="callDialog(board.boardInfo.boardId, board.boardInfo.boardType)"
           >
             <template v-if="!board.boardInfo.length">
               <div class="q-pa-md text-h6 row items-center">
@@ -101,25 +101,23 @@ const callDialog = async (id, type) => {
                 v-for="item of board.boardInfo"
                 :key="item.boardId"
               >
-                <nuxt-link
-                  to="/board/1"
+                <div
+                  class="row justify-between q-py-sm boardUnderBar cursor-pointer"
+                  @click="callDialog(item.boardId, board.boardType)"
                 >
-                  <div class="row justify-between q-py-sm boardUnderBar">
-                    <p
-                      class="ellipsis mB0"
-                      style="max-width: 270px;"
-                    >
-
-                      {{ item.title }}
-                    </p>
-                    <p
-                      class="ellipsis mB0"
-                      style="max-width: 72px;"
-                    >
-                      {{ dayjs(item.regDate).format('YYYY-MM-DD') }}
-                    </p>
-                  </div>
-                </nuxt-link>
+                  <p
+                    class="ellipsis mB0"
+                    style="max-width: 270px;"
+                  >
+                    {{ item.title }}
+                  </p>
+                  <p
+                    class="ellipsis mB0"
+                    style="max-width: 72px;"
+                  >
+                    {{ dayjs(item.regDate).format('YYYY-MM-DD') }}
+                  </p>
+                </div>
               </div>
             </template>
           </q-list>
