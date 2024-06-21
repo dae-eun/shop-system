@@ -33,6 +33,7 @@ const createOrUpdateData = () => {
         if (controllMenuStore().statusCode !== 201) throw controllMenuStore().error;
         showAlertModal(controllMenuStore().message, async () => {
           await resetData();
+          await getUserMenuStore().getData();
         });
       } catch (error) {
         console.error('Insert menu failed:', error);
@@ -44,13 +45,13 @@ const createOrUpdateData = () => {
         if (controllMenuStore().statusCode !== 200) throw controllMenuStore().error;
         showAlertModal(controllMenuStore().message, async () => {
           await resetData();
+          await getUserMenuStore().getData();
         });
       } catch (error) {
         console.error('Update menu failed:', error);
         showAlertModal(error);
       }
     }
-    await getUserMenuStore().getData();
   });
 };
 
@@ -71,6 +72,7 @@ const deleteData = () => {
           showAlertModal(error);
         };
       }
+      await getUserMenuStore().getData();
     });
   } catch (error) {
     showAlertModal(error);
