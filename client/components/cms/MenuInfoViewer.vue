@@ -190,7 +190,7 @@ watchEffect(() => {
                   게시판 타입
                 </div>
                 <div>
-                  <q-radio
+                  <!-- <q-radio
                     v-model="targetMenu.boardType"
                     val="Product"
                     label="제품"
@@ -199,7 +199,7 @@ watchEffect(() => {
                     v-model="targetMenu.boardType"
                     val="Text"
                     label="텍스트"
-                  />
+                  /> -->
                   <q-radio
                     v-model="targetMenu.boardType"
                     val="Image"
@@ -217,11 +217,11 @@ watchEffect(() => {
                   페이지 형태
                 </div>
                 <div>
-                  <q-radio
+                  <!-- <q-radio
                     v-model="targetMenu.pageType"
                     val="Infinite"
                     label="무한스크롤"
-                  />
+                  /> -->
                   <q-radio
                     v-model="targetMenu.pageType"
                     val="Page"
