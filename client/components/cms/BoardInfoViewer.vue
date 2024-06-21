@@ -62,6 +62,7 @@ const boardItem = ref({
   title: '',
   content: '',
   useAt: false,
+  pin: false,
   attachmentData: [],
   deleteList: [],
   uploadList: [],
