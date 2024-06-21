@@ -66,9 +66,7 @@ const callMenuTree = async () => {
   render.value = true;
 };
 
-onMounted(async () => {
-  await callMenuTree();
-});
+await callMenuTree();
 </script>
 
 <template>

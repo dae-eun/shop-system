@@ -125,9 +125,7 @@ const deleteData = async (thumbId) => {
 watchEffect(() => {
   imageCardItems.value.sort((a, b) => a.sortOrdr - b.sortOrdr);
 });
-onMounted(async () => {
-  await getData();
-});
+await getData();
 </script>
 
 <template>
