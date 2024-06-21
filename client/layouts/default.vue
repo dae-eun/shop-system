@@ -117,7 +117,7 @@ onMounted(() => {
               to="https://open.kakao.com/o/sCLU5xwg"
               class="text-white"
             >
-              메세지하기
+              https://open.kakao.com/o/sCLU5xwg
             </nuxt-link>
           </div>
         </q-card-section>
