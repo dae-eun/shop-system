@@ -88,7 +88,17 @@ const createOrUpdateData = () => {
 };
 
 // 에디터 이미지 추가
-const insertImg = () => {
+const isimgOptModal = ref(false);
+const imageInfo = ref({
+  width: '',
+  height: '',
+  url: '',
+  imgData: '',
+});
+const setImg = () => {
+  isimgOptModal.value = true;
+};
+const addImg = () => {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.png, .jpg';
@@ -101,18 +111,28 @@ const insertImg = () => {
     let dataUrl = '';
     reader.onloadend = () => {
       dataUrl = reader.result;
-      boardItem.value.content += '<div><img src="' + dataUrl + '" /></div>';
+      imageInfo.value.imgData = dataUrl;
     };
     reader.readAsDataURL(file);
   };
   input.click();
 };
+const insertImg = () => {
+  const { width, height, url, imgData } = imageInfo.value;
+  boardItem.value.content += `<div><a href="${url}"><img src="${imgData}" style="width:${width}; height:${height};" /></a></div>`;
+  isimgOptModal.value = false;
+};
+const resetImg = () => {
+  imageInfo.value.width = '';
+  imageInfo.value.height = '';
+  imageInfo.value.url = '';
+  imageInfo.value.imgData = '';
+};
 const definitions = {
   insert_img: {
     tip: '사진 첨부',
-    label: '사진넣기',
     icon: 'photo',
-    handler: insertImg,
+    handler: setImg,
   },
 };
 
@@ -229,8 +249,68 @@ const board_not_null_rules = (v) => {
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <q-dialog
+    v-model="isimgOptModal"
+    persistent
+    @hide="resetImg"
+  >
+    <q-card>
+      <q-card-section>
+        <q-splitter>
+          <template
+            #before
+          >
+            <q-img
+              :src="imageInfo.imgData"
+              style="height: 200px;"
+            />
+            <q-btn
+              label="이미지 추가하기"
+              color="primary"
+              @click="addImg"
+            />
+          </template>
+          <template #after>
+            <q-card-section>
+              <q-input
+                v-model="imageInfo.width"
+                class="mT10"
+                label="너비"
+              />
+              <q-input
+                v-model="imageInfo.height"
+                class="mT10"
+                label="높이"
+              />
+              <q-input
+                v-model="imageInfo.url"
+                class="mT10"
+                label="연결 링크"
+              />
+            </q-card-section>
+          </template>
+        </q-splitter>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn
+          v-close-popup
+          flat
+          label="추가하기"
+          color="primary"
+          @click="insertImg"
+        />
+        <q-btn
+          v-close-popup
+          flat
+          label="취소하기"
+          color="primary"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <style lang="scss" scoped>
-
+.q-splitter__before{height: 100%;}
 </style>
