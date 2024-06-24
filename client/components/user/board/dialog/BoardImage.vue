@@ -13,7 +13,7 @@ const props = defineProps({
   modalReset: Function,
 });
 const splitterModel = ref(60);
-const slide = ref(1);
+const slide = ref(props.selectItem.attachment[0].filePath);
 const autoplay = ref(true);
 </script>
 
@@ -61,7 +61,7 @@ const autoplay = ref(true);
             <q-carousel-slide
               v-for="(item, index) of props.selectItem.attachment"
               :key="index"
-              :name="index"
+              :name="item.filePath"
               :img-src="config.SUPABASE_IMAGES_BUCKET+item.filePath"
             />
           </q-carousel>
